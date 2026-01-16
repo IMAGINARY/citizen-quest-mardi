@@ -73,7 +73,7 @@ i18n:
     pressToContinue:
       en: 'Press space to continue'
     defaultPrompt:
-      en: 'You are at a math conference and meet different mathematicians. Talk to the people with a :speech_bubble: to get quests about math data.'
+      en: 'Talk to the conference participants with a :speech_bubble: and solve their quests.'
     includedInDecision:
       en: 'Included in the decision'
     inclusionBarTitle:
