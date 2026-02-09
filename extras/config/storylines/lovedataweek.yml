@@ -78,12 +78,12 @@ npcs:
           en: "This is my default dialogue."
   Librarian:
     name:
-      en: "I need a name."
+      en: "Librarian"
     spawn: { x: 1929, y: 530 }
     type: citizenHoodie
     dialogue:
       - text:
-          en: "I am a librarian."
+          en: "A good index saves more time than a fast algorithm."
   Barista:
     name:
       en: "I need a name."
@@ -166,11 +166,204 @@ npcs:
             thenText: "MathAlgoDB Knowledge Graph for Scientific Computing connects mathematical algorithms, models, problems, and software in a structured knowledge graph."
           - text:
               en: "MaRDMO"
-            thenText: "MaRDMO is an extension of the Research Data Management Organiser (RDMO) designed to facilitate the documentation, integration, and sharing of mathematical models, interdisciplinary workflows, and algorithms."
+            thenText: "MaRDMO builds on the Research Data Management Organiser (RDMO) to help document, integrate, and share mathematical models, workflows, and algorithms."
           - text:
               en: "GMCI"
             thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
 quests:  
+  mathmoddb:
+    npc: Dog
+    mood: exclamation
+    required: hairycat
+    available:
+      dialogue:
+        - type: sequence
+          items:
+            - text:
+                en: "Good to see you again. You found out about the MaRDI service MathModDB for me, so I can share my Hairy Cat Model with others."
+            - text:
+                en: "I am now ready to actually add it to the database. However, I cannot type with these paws. Can you help me with that?"
+              responses:
+                - text:
+                    en: "Sure, I'll help you."
+                  thenText:
+                    en: "Great! You can just go over to the MaRDI Portal Station and enter everything that's needed."
+                  set: [ 'quest.mathmoddb.active' ]
+                - text:
+                    en: "No, sorry. These cookies must have a strange effect. I will take a rest."
+                  thenText:
+                    en: "I am not an illusion! Come back anytime to help or chat."
+    stages:
+      - cond: 'found.mathmoddb.1'
+        target: Dog
+        prompt:
+          en: "Go back to Momo the dog."
+        dialogues:
+          Dog:
+            - type: sequence
+              items:
+              - text: 
+                  en: "Thank you so much for adding my Hairy Cat Model to the database! "
+              - text:
+                  en: "I am so happy that other researchers can now find it and use it for their research. You are the best!"
+                set: [ 'quest.mathmoddb.done', 'pnt.love.mathmoddb' , 'op.quest.mathmoddb' ]
+      - cond: '^found.mathmoddb.1'
+        prompt:
+          en: "Add the Hairy Cat Model to the database."
+        dialogues:
+          webBrowser:
+            - type: sequence
+              items:
+              - text: 
+                  en: "Welcome to the MaRDI Portal! Thank you for logging in to add a mathematical model to MathModDB."
+              - text: 
+                  en: "We will be using MaRDMO to enter the information about your model. Have you heard about this MaRDI service before?"
+                responses:
+                  - text:
+                      en: "No, please tell me about it."
+                    then: MaRDMO
+                  - text:
+                      en: "Yes, I know what it is. Let's dive right in."
+                    then: goon
+            - id: MaRDMO
+              type: sequence
+              items:
+                - text:  
+                    en: "MaRDMO builds on the Research Data Management Organiser (RDMO) to help document, integrate, and share mathematical models, workflows, and algorithms."
+                - text:    
+                    en: "It guides you through the process of entering all relevant information about your mathematical model, kind of like a questionnaire."
+                - text:  
+                    en: "We will use the basic questionnaire for now. It is designed for quick and straightforward documentation and focuses on essential information. Let's get started!"  
+                  then: goon
+            - id: goon
+              type: sequence
+              items:
+                - text:  
+                    en: "First we need to enter the name of your model: 'Hairy Cat Model'. Since there is no such model already in the database, we will create it now."
+                - text:  
+                    en: "Now, please enter a short description of your model."
+                  responses:
+                    - text:
+                        en: "describes the behaviour of cat fur under different conditions."
+                      thenText:
+                        en: "Great! This is a good description. It is short, but it gives a good idea of what the model is about."
+                      then: choose
+                    - text:
+                        en: "a dog’s fur-mal model of cat hair, pawsibly brilliant."
+                      thenText:
+                        en: "Great, you chose a creative description for your model. It is a bit playful, but it still gives an idea of what the model is about."
+                      then: choose
+                    - text:
+                        en: "I'll just put a placeholder for now. I will fill it in later."
+                      thenText:
+                        en: "No problem, you can always go back and edit the information later. Just make sure to add a description before you publish the model, so other researchers can understand what it is about."
+                      then: choose
+            - id: choose
+              type: sequence
+              items:
+                - text:  
+                    en: "Most of the entries you need to do are self-explanatory. However, if you need help with one of them or have questions, just ask."
+                  responses:
+                    - text:
+                        en: "Help with choosing a Research Problem"
+                      then: researchproblem
+                    - text:
+                        en: "Help with choosing a Computational Task"
+                      then: computationaltask
+                    - text:
+                        en: "Help with choosing mathematical expressions"
+                      then: expression
+                    - text:
+                        en: "I know exactly what to do and will finish adding the model on my own."
+                      then: done
+            - id: researchproblem
+              type: sequence
+              items:
+                - text:  
+                    en: "Ok, here you add information about which Research Problem is modelled by the Hairy Cat Model. You can reuse existing entries from the MaRDI Portal or Wikidata, or create new ones."
+                - text:
+                    en: "Please use the syntax: label (description) [source]. For a start, choose one of the following, you can add as many as you like later."
+                  responses:
+                    - text:
+                        en: "cat (small domesticated carnivorous mammal) [wikidata]"
+                      thenText:
+                        en: "Great! This is a good start. The Hairy Cat Model definitely contains information about cats."
+                      then: choose
+                    - text:
+                        en: "New entry: cat fur (soft chaos with an attitude)"
+                      thenText:
+                        en: "Great, you added a new research problem to the database. This is a good one, since it is quite specific and directly related to the model."
+                      then: choose
+                    - text:
+                        en: "Hairs of discrete symmetries and gravity (scientific article) [mardi]"
+                      thenText:
+                        en: "Ok, I am not sure if this article is directly related to the Hairy Cat Model. But you can add it of course, if you think it is relevant."
+                      then: choose
+            - id: computationaltask
+              type: sequence
+              items:
+                - text:  
+                    en: "Here you choose which Computational Tasks are used in the Mathematical Model. You can reuse existing entries, or create new ones."
+                - text:  
+                    en: "Choose one or more tasks. Follow the syntax: label (description) [source]. For a start, choose one of the following:"
+                  responses:
+                    - text:
+                        en: "New entry: cat happiness index (array of fur conditions)"
+                      thenText:
+                        en: "Great! You added a new Computational Task to the database. The Hairy Cat Model can be used to compute the cat happiness index, which is an array of fur conditions."
+                      then: choose
+                    - text:
+                        en: "New entry: whisker loop function (discrete behavioral states)"
+                      thenText:
+                        en: "Great, you added a new Computational Task to the database. The whisker loop function describes a discrete behavioral state that can be computed using the Hairy Cat Model."
+                      then: choose
+                    - text:
+                        en: "(...other ideas? which existing task would be appropriate to choose?...)"
+                      then: choose
+            - id: expression
+              type: sequence
+              items:
+                - text:  
+                    en: "In this section, you give information on the mathematical expressions used in the Hairy Cat Model and their relations . Select or define an expression and specify its role."
+                - text:  
+                    en: "Each entry is given by: The Hairy Cat Model ... (relation, i.e. assumes/contains...) a mathematical expression. Where the expression uses the syntax: label (description) [source]."
+                  responses:
+                    - text:
+                        en: "contains -> boundary condition -> cat collar (boundary condition)"
+                      thenText:
+                        en: "You added a new boundary condition, constraining the system to only consider states consistent with a collared or uncollared cat."
+                      then: choose
+                    - text:
+                        en: "assumes -> fluffiness(T,cat) = -a*T + cat (equation)"
+                      thenText:
+                        en: "You added an assumption to the Hairy Cat Model."
+                      then: choose
+                    - text:
+                        en: "(...more ideas?...)"
+                      then: choose
+            - id: done
+              type: sequence
+              items:
+                - text:
+                    en: "Thanks for answering all non-optional questions. You can now export the Hairy Cat Model to MathModDB, which is part of the MaRDI Portal."
+                - text:  
+                    en: "Congratulations! You have successfully added the Hairy Cat Model to MathModDB!"
+                  set: [ 'found.mathmoddb.1' ]
+          MathPerson1:
+            - text:
+                en: "The computer is over there. I have recently added a model myself, it is not hard and similar to filling out a questionnaire."
+          Dog:
+            - text:
+                en: "Just go to the computer and enter all information."
+          MathPerson2:
+            - text:
+                en: "Please, don't disturb me. I am coding..."
+          Librarian:
+            - text:
+                en: "You may use the MaRDI Portal Station around the corner to add a mathematical model to MathModDB."
+          _mardiHelpdesk:
+            - text:
+                en: "Great to hear you want to add a model to MathModDB! Just use the MaRDI Portal Station over there."
   hairycat:
     npc: Dog
     mood: exclamation
@@ -179,11 +372,11 @@ quests:
         - type: sequence
           items:
             - text:
-                en: "Hi there. I share my home with several cats. Their furr is so different from mine and behaves weirdly."
+                en: "Hi there. I share my home with several cats. Their fur is so different from mine and behaves weirdly."
             - text:
-                en: "But you know what's cool? I did some experiments and figured out, when and why the furr is wavy, frizzy, soft, fluffy etc. I even created a mathematical model and published it (on zenodo?)!"
+                en: "But you know what's cool? I did some experiments and figured out, when and why the fur is wavy, frizzy, soft, fluffy etc. I even created a mathematical model describing its behaviour!"
             - text:
-                en: "Now, I would like to connect my model to other research problems, maybe even from different academic disciplines, so everyone can make use of it. Would you help me?"
+                en: "Now, I would like to make my model available, so other researchers can make use of it, maybe even from different academic disciplines. Would you help me?"
               responses:
                 - text:
                     en: "Sure, I'll help you."
@@ -191,9 +384,33 @@ quests:
                     en: "Great! I am not sure, where I should share it. Can you find out what is a good place to share a mathematical model?"
                   set: [ 'quest.hairycat.active' ]
                 - text:
-                    en: "No, sorry. I must be halucinating - am I talking to a dog?"
+                    en: "No, sorry. I must be hallucinating - am I talking to a dog?"
                   thenText:
                     en: "I am not an illusion! Come back anytime to help or chat."
+                - text:
+                    en: "Of course, I can tell you exactly where to share your model."
+                  set: [ 'quest.hairycat.active' ]  
+                  then: shortcut
+        - id: shortcut
+          type: sequence
+          items:
+            - text:
+                en: "Wow, you must be an expert. Please, tell me where I can share my model!"
+              responses:
+                - text:
+                    en: "Just share it on Zenodo. It is a free, open-access repository."
+                  thenText: "I know about Zenodo. It definitely is a good place to share publications, datasets and things like that. However, I want my model to be linked to other problems or disciplines. I believe, I need something else."
+                - text: 
+                    en: "Share it on the MaRDI Portal, using the service MathModDB."
+                  thenText: "Great! I will share it on the MaRDI Portal and add it to MathModDB. Thank you so much for your help!"
+                  set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+                - text:
+                    en: "GMCI - the community Graphical Modelling and Causal Inference."
+                  thenText: "I heard about this MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else. Please ask around for me."
+                - text:
+                    en: "MathModDB - a database of mathematical models."
+                  thenText: "Great! I will add it to MathModDB. Thank you so much for your help!"
+                  set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
     stages:
       - cond: 'found.hairycat.mathmoddb'
         target: Dog
@@ -201,81 +418,9 @@ quests:
           en: "Tell the dog Momo about MathModDB."
         dialogues:
           Dog:
-            - type: sequence
-              items:
-              - text:
-                 en: "Great. Now I know MathModDB is the best place for my Hairy Cat Model!"
-              - text:
-                  en: "Wold you help me with choosing the right information on the research context, the mathematical structure of the model, and how the model is used computationally?"
-                responses:
-                  - text:
-                      en: "Ok, I'll help you with the mathematical structure."
-                    then: MS  
-                  - text:
-                      en: "Ok, I'll help you with the research context."
-                    then: RC  
-                  - text:
-                      en: "Ok, I'll help you with the computational use."
-                    then: CU  
-                  - text:
-                      en: "No, you are such a clever dog, you can do that yourself."
-                    thenText: "Alright, I will figure it out myself. Thank you for your help!"
-                    set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-              - id: CU     
-                type: sequence
-                items:
-                  - text:
-                      en: "Thank you! So, what would be the computational use for my Hairy Cat Model?"
-                    responses:
-                      - text:
-                          en: Link to specific computational tasks associated with your mathematical model.
-                        thenText: Ah, good idea. I will do that. Thank you!
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ] 
-                      - text:
-                          en: "One computational task would be 'Continuum hair estimation'."
-                        thenText: "Ah, good idea. I'll keep that in mind. Thank you!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-                      - text:
-                          en: "Remember to include the cat collar boundary condition."
-                        thenText: "Ah, good idea. I will do that. Thank you!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-              - id: RC     
-                type: sequence
-                items:
-                  - text:
-                      en: "Thank you! So, which research context should I choose?"
-                    responses:
-                      - text:
-                          en: Link your model to a research problem and an academic discipline.
-                        thenText: Ah, good idea. I will do that. Thank you!
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ] 
-                      - text:
-                          en: "Link it to the problem 'Understanding the physical properties of cat fur'."
-                        thenText: "Ah, good idea. I'll do that. Thank you!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-                      - text:
-                          en: "The academic discipline could be 'Applied Felinology'."
-                        thenText: "Ah, good idea. I'll keep that in mind. Thank you!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-              - id: MS     
-                type: sequence
-                items:
-                  - text:
-                      en: "Thank you! So, which mathematical structure does my model use?"
-                    responses:
-                      - text:
-                          en: Link your model to the mathematical expressions and the quantities.
-                        thenText: Ah, good idea. I will do that. Thank you!
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ] 
-                      - text:
-                          en: "One of the quantities is the electric charge as well as the fluffiness."
-                        thenText: "Ah, good idea. I'll keep that in mind. Thank you!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-                      - text:
-                          en: "One equation is probably: fluffiness(T,cat) = -a*T + cat."
-                        thenText: "Of course, I know! Thank you anyway!"
-                        set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
-
+            - text:
+                en: "Great. Now I know MathModDB is the best place for my Hairy Cat Model!"
+              set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
       - cond: '^found.hairycat.mathmoddb'
         prompt:
           en: "Find out where best to share a mathematical model."
@@ -294,13 +439,13 @@ quests:
               type: sequence
               items:
                 - text:
-                    en: "(add an explanation for Knowledge graphs, suitable for the audience)."
+                    en: "A knowledge graph is a way of organizing information by connecting related things. It stores facts as simple pieces like people, theorems, or disciplines, and shows how they are linked to each other."
                   then: Details
             - id: Details
               type: sequence
               items:
                 - text:
-                    en: "When you enter the model, you should also give information on the research context, the mathematical structure of the model, and how the model is used computationally."
+                    en: "You can create an account, use an institutional one if you have one, or use your ORCID, Github or even Google account to log in."
                   set: [ 'found.hairycat.mathmoddb' ]
           Librarian:
             - type: sequence
@@ -317,9 +462,9 @@ quests:
                 - text:
                     en: "Mathematical models are best shared in the knowledge graph for mathematical models. Please use MaRDI's service MathModDB."
                 - text:
-                    en: "By the way, a knowledge graph is ... (add an explanation for Knowledge graphs, suitable for the audience)."
+                    en: "By the way, a knowledge graph is a way of organizing information by connecting related things. It stores facts as simple pieces like people, theorems, or disciplines, and shows how they are linked to each other."
                 - text:
-                    en: "When you enter the model, you should also give information on the research context, the mathematical structure of the model, and how the model is used computationally."
+                    en: "You can create an account, use an institutional one if you have one, or use your ORCID, Github or even Google account to log in."
                   set: [ 'found.hairycat.mathmoddb' ]
           MathPerson1:
             - text:
@@ -340,9 +485,30 @@ ending:
           type: sequence
           items:
             - text:
-                en: 'You helped Momo to add the Hairy Cat model to MathModDB.'
+                en: 'You know about sharing mathematical models.'
         - cond: '^quest.hairycat.done'
           type: sequence
           items:
             - text:
-                en: "You did not help Momo to publish the Hairy Cat Model. Try again."
+                en: "You did not find out where to best share a mathematical model."
+        - cond: 'quest.mathmoddb.done'
+          class: 'citizensEmpowered'
+          type: sequence
+          items:
+            - text:
+                en: 'You helped Momo to add the Hairy Cat Model to MathModDB.'
+        - cond: '^quest.mathmoddb.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help Momo to publish the Hairy Cat Model."
+        - cond: 'COUNT("op.quest") < 2'
+          type: sequence
+          items:
+            - text:
+                en: "Try again!"
+        - cond: 'COUNT("op.quest") = 2'
+          type: sequence
+          items:
+            - text:
+                en: "You solved all quests! Great job! You are a true MaRDI champion!"
