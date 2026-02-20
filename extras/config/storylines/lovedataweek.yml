@@ -15,14 +15,14 @@ scenery:
 npcs:
   MathPerson1:
     name:
-      en: "I need a name"
+      en: "Aurela I. Agricola"
     type: citizenBlue
     spawn: { x: 819, y: 448 }
     dialogue:
     - type: sequence
       items:
         - text:
-            en: "This is my default dialogue."
+            en: "I am a mathematician specialising in differential geometry and its applications in mathematical physics. I am also intersted in stochastic algorithms and nonparametric statistics."
   robot:
     name:
       en: "Robot (my default dialogue is chosen randomly)"
@@ -70,12 +70,12 @@ npcs:
           en: "I work at the MaRDI help desk. I will help you with questions about data."
   MathPerson2:
     name:
-      en: "I need a name."
+      en: "Lou Prandtl"
     spawn: { x: 1212, y: 333 }
     type: citizenLila
     dialogue:
       - text:
-          en: "This is my default dialogue."
+          en: "I am a specialist in fluid dynamics. I am here to learn about the latest developments in research data management."
   Librarian:
     name:
       en: "Librarian"
@@ -86,7 +86,7 @@ npcs:
           en: "A good index saves more time than a fast algorithm."
   Barista:
     name:
-      en: "I need a name."
+      en: "Barista"
     spawn: { x: 1400, y: 500 }
     type: barista
     dialogue:
@@ -116,12 +116,12 @@ npcs:
           en: "Woof!"
   MathPerson3:
     name:
-      en: "I need a name"
+      en: "Richie Mises"
     type: journalist
     spawn: { x: 471, y: 333 }
     dialogue:
       - text:
-          en: "This is my default dialogue."
+          en: "I am a researcher in applied mathematics and mechanics. I am interested in learning about research data management and how it can be applied to my work."
   coffeeMachine:
     type: invisible
     name:
@@ -351,19 +351,26 @@ quests:
                   set: [ 'found.mathmoddb.1' ]
           MathPerson1:
             - text:
-                en: "The computer is over there. I have recently added a model myself, it is not hard and similar to filling out a questionnaire."
+                en: "The computer is over there. I have recently added a model myself on the gravitational effects on fruits, it is not hard and similar to filling out a questionnaire."
           Dog:
             - text:
                 en: "Just go to the computer and enter all information."
-          MathPerson2:
-            - text:
-                en: "Please, don't disturb me. I am coding..."
+          MathPerson3:
+            - type: sequence
+              items:
+              - text:
+                  en: "Great you want to share a mathematical model on the behavior of cat fur! You can use the computer over there."
+              - text:
+                  en: "It might be very useful for my work on the coating of aircraft wings. Let me know when the model is availble on MathModDB, so I can check it out!"
           Librarian:
             - text:
                 en: "You may use the MaRDI Portal Station around the corner to add a mathematical model to MathModDB."
           _mardiHelpdesk:
             - text:
                 en: "Great to hear you want to add a model to MathModDB! Just use the MaRDI Portal Station over there."
+          MathPerson2:
+            - text:
+                en: "Great to hear you want to add an interesting mathematical model to MathModDB! How about submitting a talk to the next GAMM conference?"
   hairycat:
     npc: Dog
     mood: exclamation
@@ -398,19 +405,18 @@ quests:
                 en: "Wow, you must be an expert. Please, tell me where I can share my model!"
               responses:
                 - text:
-                    en: "Just share it on Zenodo. It is a free, open-access repository."
-                  thenText: "I know about Zenodo. It definitely is a good place to share publications, datasets and things like that. However, I want my model to be linked to other problems or disciplines. I believe, I need something else."
+                    en: "Share it on your own website."
+                  thenText: "I'm a dog, I don't have a website. And how would other people find my mathematical model? I want it to be easily findable and reusable for other researchers. I believe, I need something else. Please ask around for me."
                 - text: 
-                    en: "Share it on the MaRDI Portal, using the service MathModDB."
-                  thenText: "Great! I will share it on the MaRDI Portal and add it to MathModDB. Thank you so much for your help!"
+                    en: "Share it on MathModDB."
+                  thenText: "Great! I will add it to MathModDB, the database of mathematical models. Thank you so much for your help!"
                   set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
                 - text:
-                    en: "GMCI - the community Graphical Modelling and Causal Inference."
-                  thenText: "I heard about this MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else. Please ask around for me."
+                    en: "Share it on the GMCI community."
+                  thenText: "I heard about the community for Graphical Modelling and Causal Inference. It is MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else. Please ask around for me."
                 - text:
-                    en: "MathModDB - a database of mathematical models."
-                  thenText: "Great! I will add it to MathModDB. Thank you so much for your help!"
-                  set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+                    en: "Share it on Zenodo."
+                  thenText: "I know about Zenodo, the free, open-access repository. It definitely is a good place to share publications, datasets and things like that. However, I want my model to be linked to other problems or disciplines."
     stages:
       - cond: 'found.hairycat.mathmoddb'
         target: Dog
@@ -418,9 +424,24 @@ quests:
           en: "Tell the dog Momo about MathModDB."
         dialogues:
           Dog:
-            - text:
-                en: "Great. Now I know MathModDB is the best place for my Hairy Cat Model!"
-              set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+            - type: sequence
+              items:
+                - text:
+                    en: "Good to see you again. Did you find out about the best place to share my Hairy Cat Model?"
+                  responses:
+                    - text:
+                        en: "Share it on your own website."
+                      thenText: "I'm a dog, I don't have a website. And how would other people find my mathematical model? I want it to be easily findable and reusable for other researchers. I believe, I need something else."
+                    - text: 
+                        en: "Share it on MathModDB."
+                      thenText: "Great! I will add it to MathModDB, the database of mathematical models. Thank you so much for your help!"
+                      set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+                    - text:
+                        en: "Share it on the GMCI community."
+                      thenText: "I heard about the community for Graphical Modelling and Causal Inference. It is MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else."
+                    - text:
+                        en: "Share it on Zenodo."
+                      thenText: "I know about Zenodo, the free, open-access repository. It definitely is a good place to share publications, datasets and things like that. However, I want my model to be linked to other problems or disciplines."
       - cond: '^found.hairycat.mathmoddb'
         prompt:
           en: "Find out where best to share a mathematical model."
@@ -467,15 +488,25 @@ quests:
                     en: "You can create an account, use an institutional one if you have one, or use your ORCID, Github or even Google account to log in."
                   set: [ 'found.hairycat.mathmoddb' ]
           MathPerson1:
-            - text:
-                en: "Oh, there is a MaRDI service for that. You could check the MaRDI Portal on the web, which one to use."
+            - type: sequence
+              items:
+              - text:
+                  en: "Oh, there is a MaRDI service for that, a database of mathematical models."
+              - text:
+                  en: "I can tell you all about it, but maybe you should ask the MaRDI help desk first."
           Dog:
             - text:
                 en: "Please, you promised to help me. Ask around, where I can publish my mathematical model."
+          MathPerson3:
+            - type: sequence
+              items:
+              - text:
+                  en: "I have never heard of the Hairy Cat Model before. But it sounds very interesting. Great you want to share it!"
+              - text:
+                  en: "I am currently working on a project about the coating of aircraft wings and the behavior under different weather conditions. The Hairy Cat Model could be very useful for that."
           MathPerson2:
-            - text:
-                en: "Please, don't disturb me. I am coding..."
-
+            - text: 
+                en: "We have experts here at the conference on research data management. You should ask at the MaRDI help desk, where best to share your model."
 ending:
   dialogue:
     - type: sequence

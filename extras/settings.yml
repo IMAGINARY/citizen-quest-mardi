@@ -1,6 +1,7 @@
 game:
   devModeShortcuts: false
   languages: ['en']
+  duration: 600 
   cameraPresets:
     walking:
       offset:
