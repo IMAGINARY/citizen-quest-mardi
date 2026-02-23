@@ -1,5 +1,5 @@
 decision:
-  en: "Talk to the conference participants and solve theirquests."
+  en: "Talk to the conference participants and solve their quests."
 prompt:
   en: "You are at a conference about applied mathematics. You enter the scene after a conference slot, the audience leaves the room and discusses the presentations they have just heard. Some may have problems you can help them with."
   # - inc.mayor
@@ -22,7 +22,7 @@ npcs:
     - type: sequence
       items:
         - text:
-            en: "I am a mathematician specialising in differential geometry and its applications in mathematical physics. I am also intersted in stochastic algorithms and nonparametric statistics."
+            en: "I am a mathematician specialising in differential geometry and its applications in mathematical physics. I am also interested in stochastic algorithms and nonparametric statistics."
   robot:
     name:
       en: "Robot (my default dialogue is chosen randomly)"
@@ -109,7 +109,7 @@ npcs:
   Dog:
     name:
       en: "Momo"
-    spawn: { x: 1650, y: 580 }
+    spawn: { x: 560, y: 380 }
     type: dogTan
     dialogue:
       - text:
@@ -131,24 +131,35 @@ npcs:
       - type: first
         items:
           - text:
-              en: "Let's integrate some coffee into your day!"
+              en: "Guess which description matches which type of coffee! We offer Latte Macchiato, Espresso, Americano and Caffè Latte. Choose wisely!"
             responses:
               - text:
-                  en: "Espresso"
+                  en: "Closed Form Expression"
+                thenText:
+                  en: "A closed-form solution is compact, contains no iterative steps, and produces a result immediately. Just like an Espresso!"
                 then: brew
               - text:
-                  en: "Latte"
+                  en: "Affine Transformation"
+                thenText:
+                  en: "Take an Espresso and add some hot water. This is an affine transformation, since you just change the scale of the Espresso, but not its structure. This is an Americano!"
                 then: brew
               - text:
-                  en: "Cappuccino"
+                  en: "Function Composition"
+                thenText:
+                  en: "Let E(x) = add Espresso, M(y) = add hot milk, and F(z) = add milk foam. Then the composed function C: X -> Z, C(x)=F(M(E(x))) describes a Latte Macchiato. And don't even think about changing the order of the process!"
+                then: brew
+              - text:
+                  en: "Weighted Linear Combination"
+                thenText:
+                  en: "Take the weighted linear combination: α (espresso) + β (milk).  For β ≫ α,  this is a Caffè Latte!"
                 then: brew
       - id: brew
         type: sequence
         items:
           - text:
-              en: "Beep! Whirrrrrr..."
+              en: "Beep! Whirrrrrr...Ssshhhhhhhh... drip, drip, drip."
           - text:
-              en: "Ssshhhhhhhh... drip, drip, drip."
+              en: "Here you go. Be careful, it is hot!"
   webBrowser:
     type: invisible
     name:
@@ -171,6 +182,195 @@ npcs:
               en: "GMCI"
             thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
 quests:  
+  coffee:
+    npc: Barista
+    mood: exclamation
+    available:
+      dialogue:
+        - type: sequence
+          items:
+            - text:
+                en: "I have been wondering how to improve the coffee experience for the conference participants. I want to reduce the preperation time, and if possible further improve the taste."
+            - text:
+                en: "I want to update my machine, but would need to know what algorithms are available. Can you help me with that?"
+              responses:
+                - text:
+                    en: "Sure, I'll help you."
+                  thenText:
+                    en: "Great, thank you! Please ask some of the data experts around, where I can find information about different coffee making algorithms."
+                  set: [ 'quest.coffee.active' ]
+                - text:
+                    en: "No, sorry, I just want a cookie."
+                  thenText:
+                    en: "Oh, that's too bad. But sure, take a cookie. Maybe next time!"
+    stages:
+      - cond: 'found.mathalgodb.1'
+        target: Barista
+        prompt:
+          en: "Tell the Barista about your findings."
+        dialogues:
+          Barista:
+            - type: sequence
+              items:
+              - text: 
+                  en: "Thank you so much for finding out about different coffee making algorithms!"
+              - text:
+                  en: "I will need to do some benchmark tests to evaluate which one offers an optimum of taste, energy consumption and preperation time."
+              - text:
+                  en: "Then I will update my machine right away. I am sure the conference participants will love it!"
+                set: [ 'quest.coffee.done', 'pnt.love.coffee' , 'op.quest.coffee' ]
+      - cond: '^found.mathalgodb.1'
+        prompt:
+          en: "Find information about different coffee making algorithms."
+        dialogues:
+          Barista:
+            - text:
+                en: "Please, ask around for me, where I can find information about different coffee making algorithms."
+          Dog:
+            - text:
+                en: "I don't drink coffee. Woof! Woof!"
+          MathPerson1:
+            - text:
+                en: "Oh, my colleages from MaRDI have developed a service called MathAlgoDB. It is a knowledge graph for algorithms. Just go to the computer and check it out."
+          MathPerson2:
+            - text:
+                en: "Coffee making is an intersting problem. When I was working on my research on fluid dynamics, I was modeling the flow around submarine propeller blades. I wonder if this would be relevant for your problem." 
+          MathPerson3:
+            - text:
+                en: "I love coffee! We should offer a prize for the best coffee making algorithm at the next GAMM conference!"
+          Librarian:
+            - text:
+                en: "You may use the MaRDI Portal Station around the corner to search for an algorithm using MathAlgoDB, the knowledge graph for numerical algorithms."
+          _mardiHelpdesk:
+            - type: sequence
+              items:
+                - text:
+                    en: "For this purpose, the MaRDI service MathAlgoDB was developed! It is a knowledge graph for numerical algorithms. Just use the MaRDI Portal Station over there."
+                  responses:
+                    - text:
+                        en: "Thank you."
+                    - text:
+                        en: "Thank you. But what is a Knowledge Graph?"
+                      thenText:
+                        en: "A knowledge graph is a way of organizing information by connecting related things. The MathAlgoDB knowledge graph stores things like algorithms, software, and benchmarks, and shows how they are linked to each other."
+          webBrowser:
+            - text:
+               en: "Where do you want to go?"
+              responses:
+                - text:
+                   en: "MathModDB"
+                  thenText: "MathModDB is a database of mathematical models. It helps organize and link mathematical models, offering structured insights into mathematical modelling and related computational tasks. "
+                - text:
+                   en: "MathAlgoDB"
+                  then: mathalgodb
+                - text:
+                    en: "MaRDMO"
+                  thenText: "MaRDMO builds on the Research Data Management Organiser (RDMO) to help document, integrate, and share mathematical models, workflows, and algorithms."
+                - text:
+                    en: "GMCI"
+                  thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
+            - id: mathalgodb
+              type: sequence
+              items:
+                - text: 
+                    en: "Thank you for choosing MathAlgoDB, the Algorithm Knowledge Graph."
+                - text:
+                    en: "Here you can find information about different algorithms, their relations to mathematical models, problems, software, benchmarks, and publications."
+                  then: whattodo
+            - id: whattodo
+              type: sequence
+              items:
+                - text:  
+                    en: "What would you like to do next?"
+                  responses:
+                    - text:
+                        en: "I want to search for coffee making algorithms."
+                      then: search1
+                    - text:
+                        en: "I need and explanation of one of the terms you mentioned."
+                      then: explain
+            - id: search1
+              type: sequence
+              items:
+                - text:
+                    en: "Ok, click on the Graph Query button to search the knowledge graph."
+                  responses:
+                    - text:
+                        en: "GRAPH QUERY"
+                      thenText:
+                          en: "First you can narrow down your search by choosing a specific field or decide to search all fields."
+                      then: search2
+                    - text:
+                        en: "What is a knowledge graph?"
+                      thenText:
+                        en: "A knowledge graph is a way of organizing information by connecting related things. The MathAlgoDB knowledge graph stores things like algorithms, software, and benchmarks, and shows how they are linked to each other."
+                      then: search1
+                    - text:
+                        en: "I need and explanation of one of the terms you mentioned before."
+                      then: explain
+            - id: search2
+              type: sequence
+              items:
+                - text:
+                    en: "Enter your query, which is made up of three entries:"
+                  responses:
+                    - text:
+                        en: "1. select subject"
+                      thenText:
+                        en: "In the subject field, select 'Algorithm' from the dropdown menu, since you are looking for coffee making algorithms."
+                      then: search2
+                    - text:
+                        en: "2. select predicate"
+                      thenText:
+                        en: "In the predicate field, select 'solves' from the dropdown menu, since you are looking for algorithms that solve a certain problem, which in this case is the problem of making coffee."
+                      then: search2
+                    - text:
+                        en: "3. select object"
+                      thenText:
+                        en: "In the object field, select 'coffee making' from the dropdown menu, since this is the problem the algorithms you are looking for should solve."
+                      then: search2
+                    - text:
+                        en: "Thanks, I entered everything, now I want to run the query."
+                      then: query
+            - id: query
+              type: sequence
+              items:
+                - text:
+                    en: "Ok, your query should look like this: 'Which <Algorithm ∨> <solves ∨> <coffee making ∨> ?'. Results are shown automatically."
+                - text:
+                    en: "You found several algorithms for coffee making! You can click on each of them to get more information, like which publication analyzes the algorithm, or which software implements it."
+                  set: [ 'found.mathalgodb.1' ]
+            - id: explain
+              type: sequence
+              items:
+                - text:  
+                    en: "Sure, which term would you like to have explained?"
+                  responses:
+                    - text:
+                        en: "What is an algorithm?"
+                      thenText:
+                        en: "An algorithm is a step-by-step procedure for performing a task. It can be implemented in software and executed on a computer. Just like the procedure of preparing a Caffè Latte  with a coffee machine."
+                      then: whattodo
+                    - text:
+                        en: "What is a mathematical model?"
+                      thenText:
+                        en: "A mathematical model is a description of a system using mathematical concepts and language. It can be used to explain the behavior of coffee in different conditions, make predictions, or optimize it."
+                      then: whattodo
+                    - text:
+                        en: "What is a problem?"
+                      thenText:
+                        en: "Each algorithms solves a certain problem at hand. In the case of coffee making, the problem of a thirsty and tired mathematician could be solved by preparing an Americano with a coffee machine."
+                      then: whattodo
+                    - text:
+                        en: "What is a software?"
+                      thenText:
+                        en: "Software is a collection of instructions that tell a computer what to do. In a coffee machine these are the programs that implement and execute the preparation of the different types of coffee."
+                      then: whattodo
+                    - text:
+                        en: "What is a benchmark?"
+                      thenText:
+                        en: "A benchmark refers to a set of tests used to evaluate the performance of algorithms. A specific procedure to prepare a cappuccino might need a certain amount of resources and take a certain amount of time."
+                      then: whattodo
   mathmoddb:
     npc: Dog
     mood: exclamation
@@ -207,148 +407,167 @@ quests:
               - text:
                   en: "I am so happy that other researchers can now find it and use it for their research. You are the best!"
                 set: [ 'quest.mathmoddb.done', 'pnt.love.mathmoddb' , 'op.quest.mathmoddb' ]
+          Barista:
+            - text:
+                en: "Oh, you are looking for Momo? She sits right there. Don't be afraid to talk to her, she is a very nice dog!"
       - cond: '^found.mathmoddb.1'
         prompt:
           en: "Add the Hairy Cat Model to the database."
         dialogues:
           webBrowser:
-            - type: sequence
-              items:
-              - text: 
-                  en: "Welcome to the MaRDI Portal! Thank you for logging in to add a mathematical model to MathModDB."
-              - text: 
-                  en: "We will be using MaRDMO to enter the information about your model. Have you heard about this MaRDI service before?"
+          - text:
+              en: "Where do you want to go?"
+            responses:
+            - text:
+                en: "MathModDB"
+              then: mathmoddb
+            - text:
+                en: "MathAlgoDB"
+              thenText: "MathAlgoDB Knowledge Graph for Scientific Computing connects mathematical algorithms, models, problems, and software in a structured knowledge graph."
+            - text:
+                en: "MaRDMO"
+              then: mathmoddb
+            - text:
+                en: "GMCI"
+              thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
+          - id: mathmoddb
+            type: sequence
+            items:
+            - text: 
+                en: "Thank you for logging in to add a mathematical model to MathModDB."
+            - text: 
+                en: "We will be using MaRDMO to enter the information about your model. Have you heard about this MaRDI service before?"
+              responses:
+                - text:
+                    en: "No, please tell me about it."
+                  then: MaRDMO
+                - text:
+                    en: "Yes, I know what it is. Let's dive right in."
+                  then: goon
+          - id: MaRDMO
+            type: sequence
+            items:
+            - text:  
+                en: "MaRDMO builds on the Research Data Management Organiser (RDMO) to help document, integrate, and share mathematical models, workflows, and algorithms."
+            - text:    
+                en: "It guides you through the process of entering all relevant information about your mathematical model, kind of like a questionnaire."
+            - text:  
+                en: "We will use the basic questionnaire for now. It is designed for quick and straightforward documentation and focuses on essential information. Let's get started!"  
+              then: goon
+          - id: goon
+            type: sequence
+            items:
+              - text:  
+                  en: "First we need to enter the name of your model: 'Hairy Cat Model'. Since there is no such model already in the database, we will create it now."
+              - text:  
+                  en: "Now, please enter a short description of your model."
                 responses:
                   - text:
-                      en: "No, please tell me about it."
-                    then: MaRDMO
+                      en: "describes the behaviour of cat fur under different conditions."
+                    thenText:
+                      en: "Great! This is a good description. It is short, but it gives a good idea of what the model is about."
+                    then: choose
                   - text:
-                      en: "Yes, I know what it is. Let's dive right in."
-                    then: goon
-            - id: MaRDMO
-              type: sequence
-              items:
-                - text:  
-                    en: "MaRDMO builds on the Research Data Management Organiser (RDMO) to help document, integrate, and share mathematical models, workflows, and algorithms."
-                - text:    
-                    en: "It guides you through the process of entering all relevant information about your mathematical model, kind of like a questionnaire."
-                - text:  
-                    en: "We will use the basic questionnaire for now. It is designed for quick and straightforward documentation and focuses on essential information. Let's get started!"  
-                  then: goon
-            - id: goon
-              type: sequence
-              items:
-                - text:  
-                    en: "First we need to enter the name of your model: 'Hairy Cat Model'. Since there is no such model already in the database, we will create it now."
-                - text:  
-                    en: "Now, please enter a short description of your model."
-                  responses:
-                    - text:
-                        en: "describes the behaviour of cat fur under different conditions."
-                      thenText:
-                        en: "Great! This is a good description. It is short, but it gives a good idea of what the model is about."
-                      then: choose
-                    - text:
-                        en: "a dog’s fur-mal model of cat hair, pawsibly brilliant."
-                      thenText:
-                        en: "Great, you chose a creative description for your model. It is a bit playful, but it still gives an idea of what the model is about."
-                      then: choose
-                    - text:
-                        en: "I'll just put a placeholder for now. I will fill it in later."
-                      thenText:
-                        en: "No problem, you can always go back and edit the information later. Just make sure to add a description before you publish the model, so other researchers can understand what it is about."
-                      then: choose
-            - id: choose
-              type: sequence
-              items:
-                - text:  
-                    en: "Most of the entries you need to do are self-explanatory. However, if you need help with one of them or have questions, just ask."
-                  responses:
-                    - text:
-                        en: "Help with choosing a Research Problem"
-                      then: researchproblem
-                    - text:
-                        en: "Help with choosing a Computational Task"
-                      then: computationaltask
-                    - text:
-                        en: "Help with choosing mathematical expressions"
-                      then: expression
-                    - text:
-                        en: "I know exactly what to do and will finish adding the model on my own."
-                      then: done
-            - id: researchproblem
-              type: sequence
-              items:
-                - text:  
-                    en: "Ok, here you add information about which Research Problem is modelled by the Hairy Cat Model. You can reuse existing entries from the MaRDI Portal or Wikidata, or create new ones."
-                - text:
-                    en: "Please use the syntax: label (description) [source]. For a start, choose one of the following, you can add as many as you like later."
-                  responses:
-                    - text:
-                        en: "cat (small domesticated carnivorous mammal) [wikidata]"
-                      thenText:
-                        en: "Great! This is a good start. The Hairy Cat Model definitely contains information about cats."
-                      then: choose
-                    - text:
-                        en: "New entry: cat fur (soft chaos with an attitude)"
-                      thenText:
-                        en: "Great, you added a new research problem to the database. This is a good one, since it is quite specific and directly related to the model."
-                      then: choose
-                    - text:
-                        en: "Hairs of discrete symmetries and gravity (scientific article) [mardi]"
-                      thenText:
-                        en: "Ok, I am not sure if this article is directly related to the Hairy Cat Model. But you can add it of course, if you think it is relevant."
-                      then: choose
-            - id: computationaltask
-              type: sequence
-              items:
-                - text:  
-                    en: "Here you choose which Computational Tasks are used in the Mathematical Model. You can reuse existing entries, or create new ones."
-                - text:  
-                    en: "Choose one or more tasks. Follow the syntax: label (description) [source]. For a start, choose one of the following:"
-                  responses:
-                    - text:
-                        en: "New entry: cat happiness index (array of fur conditions)"
-                      thenText:
-                        en: "Great! You added a new Computational Task to the database. The Hairy Cat Model can be used to compute the cat happiness index, which is an array of fur conditions."
-                      then: choose
-                    - text:
-                        en: "New entry: whisker loop function (discrete behavioral states)"
-                      thenText:
-                        en: "Great, you added a new Computational Task to the database. The whisker loop function describes a discrete behavioral state that can be computed using the Hairy Cat Model."
-                      then: choose
-                    - text:
-                        en: "(...other ideas? which existing task would be appropriate to choose?...)"
-                      then: choose
-            - id: expression
-              type: sequence
-              items:
-                - text:  
-                    en: "In this section, you give information on the mathematical expressions used in the Hairy Cat Model and their relations . Select or define an expression and specify its role."
-                - text:  
-                    en: "Each entry is given by: The Hairy Cat Model ... (relation, i.e. assumes/contains...) a mathematical expression. Where the expression uses the syntax: label (description) [source]."
-                  responses:
-                    - text:
-                        en: "contains -> boundary condition -> cat collar (boundary condition)"
-                      thenText:
-                        en: "You added a new boundary condition, constraining the system to only consider states consistent with a collared or uncollared cat."
-                      then: choose
-                    - text:
-                        en: "assumes -> fluffiness(T,cat) = -a*T + cat (equation)"
-                      thenText:
-                        en: "You added an assumption to the Hairy Cat Model."
-                      then: choose
-                    - text:
-                        en: "(...more ideas?...)"
-                      then: choose
-            - id: done
-              type: sequence
-              items:
-                - text:
-                    en: "Thanks for answering all non-optional questions. You can now export the Hairy Cat Model to MathModDB, which is part of the MaRDI Portal."
-                - text:  
-                    en: "Congratulations! You have successfully added the Hairy Cat Model to MathModDB!"
-                  set: [ 'found.mathmoddb.1' ]
+                      en: "a dog’s fur-mal model of cat hair, pawsibly brilliant."
+                    thenText:
+                      en: "Great, you chose a creative description for your model. It is a bit playful, but it still gives an idea of what the model is about."
+                    then: choose
+                  - text:
+                      en: "I'll just put a placeholder for now. I will fill it in later."
+                    thenText:
+                      en: "No problem, you can always go back and edit the information later. Just make sure to add a description before you publish the model, so other researchers can understand what it is about."
+                    then: choose
+          - id: choose
+            type: sequence
+            items:
+              - text:  
+                  en: "Most of the entries you need to do are self-explanatory. However, if you need help with one of them or have questions, just ask."
+                responses:
+                  - text:
+                      en: "Help with choosing a Research Problem"
+                    then: researchproblem
+                  - text:
+                      en: "Help with choosing a Computational Task"
+                    then: computationaltask
+                  - text:
+                      en: "Help with choosing mathematical expressions"
+                    then: expression
+                  - text:
+                      en: "I know exactly what to do and will finish adding the model on my own."
+                    then: done
+          - id: researchproblem
+            type: sequence
+            items:
+              - text:  
+                  en: "Ok, here you add information about which Research Problem is modelled by the Hairy Cat Model. You can reuse existing entries from the MaRDI Portal or Wikidata, or create new ones."
+              - text:
+                  en: "Please use the syntax: label (description) [source]. For a start, choose one of the following, you can add as many as you like later."
+                responses:
+                  - text:
+                      en: "cat (small domesticated carnivorous mammal) [wikidata]"
+                    thenText:
+                      en: "Great! This is a good start. The Hairy Cat Model definitely contains information about cats."
+                    then: choose
+                  - text:
+                      en: "New entry: cat fur (soft chaos with an attitude)"
+                    thenText:
+                      en: "Great, you added a new research problem to the database. This is a good one, since it is quite specific and directly related to the model."
+                    then: choose
+                  - text:
+                      en: "Hairs of discrete symmetries and gravity (scientific article) [mardi]"
+                    thenText:
+                      en: "Ok, I am not sure if this article is directly related to the Hairy Cat Model. But you can add it of course, if you think it is relevant."
+                    then: choose
+          - id: computationaltask
+            type: sequence
+            items:
+              - text:  
+                  en: "Here you choose which Computational Tasks are used in the Mathematical Model. You can reuse existing entries, or create new ones."
+              - text:  
+                  en: "Choose one or more tasks. Follow the syntax: label (description) [source]. For a start, choose one of the following:"
+                responses:
+                  - text:
+                      en: "New entry: cat happiness index (array of fur conditions)"
+                    thenText:
+                      en: "Great! You added a new Computational Task to the database. The Hairy Cat Model can be used to compute the cat happiness index, which is an array of fur conditions."
+                    then: choose
+                  - text:
+                      en: "New entry: whisker loop function (discrete behavioral states)"
+                    thenText:
+                      en: "Great, you added a new Computational Task to the database. The whisker loop function describes a discrete behavioral state that can be computed using the Hairy Cat Model."
+                    then: choose
+                  - text:
+                      en: "(...other ideas? which existing task would be appropriate to choose?...)"
+                    then: choose
+          - id: expression
+            type: sequence
+            items:
+              - text:  
+                  en: "In this section, you give information on the mathematical expressions used in the Hairy Cat Model and their relations . Select or define an expression and specify its role."
+              - text:  
+                  en: "Each entry is given by: The Hairy Cat Model ... (relation, i.e. assumes/contains...) a mathematical expression. Where the expression uses the syntax: label (description) [source]."
+                responses:
+                  - text:
+                      en: "contains -> boundary condition -> cat collar (boundary condition)"
+                    thenText:
+                      en: "You added a new boundary condition, constraining the system to only consider states consistent with a collared or uncollared cat."
+                    then: choose
+                  - text:
+                      en: "assumes -> fluffiness(T,cat) = -a*T + cat (equation)"
+                    thenText:
+                      en: "You added an assumption to the Hairy Cat Model."
+                    then: choose
+                  - text:
+                      en: "(...more ideas?...)"
+                    then: choose
+          - id: done
+            type: sequence
+            items:
+              - text:
+                  en: "Thanks for answering all non-optional questions. You can now export the Hairy Cat Model to MathModDB, which is part of the MaRDI Portal."
+              - text:  
+                  en: "Congratulations! You have successfully added the Hairy Cat Model to MathModDB!"
+                set: [ 'found.mathmoddb.1' ]
           MathPerson1:
             - text:
                 en: "The computer is over there. I have recently added a model myself on the gravitational effects on fruits, it is not hard and similar to filling out a questionnaire."
@@ -368,6 +587,9 @@ quests:
           _mardiHelpdesk:
             - text:
                 en: "Great to hear you want to add a model to MathModDB! Just use the MaRDI Portal Station over there."
+          Barista:
+            - text:
+                en: "I don't know much about cats. But it reminds me of Kopi Luwak, the coffee made from beans that have been eaten and excreted by the Asian palm civet."
           MathPerson2:
             - text:
                 en: "Great to hear you want to add an interesting mathematical model to MathModDB! How about submitting a talk to the next GAMM conference?"
@@ -423,6 +645,9 @@ quests:
         prompt:
           en: "Tell the dog Momo about MathModDB."
         dialogues:
+          Barista:
+            - text:
+                en: "I don't know much about cats. But it reminds me of Kopi Luwak, the coffee made from beans that have been eaten and excreted by the Asian palm civet."
           Dog:
             - type: sequence
               items:
@@ -447,27 +672,47 @@ quests:
           en: "Find out where best to share a mathematical model."
         dialogues:
           webBrowser:
-            - text:
-                en: "Mathematical models are best shared in the knowledge graph for mathematical models. Please use MaRDI's service MathModDB."
-              responses:
-                - text:
-                    en: "Thank you. That's the information I was looking for."
-                  then: Details
-                - text:
-                    en: "Thank you. But what is a Knowledge Graph?"
-                  then: KG
-            - id: KG
-              type: sequence
-              items:
-                - text:
-                    en: "A knowledge graph is a way of organizing information by connecting related things. It stores facts as simple pieces like people, theorems, or disciplines, and shows how they are linked to each other."
-                  then: Details
-            - id: Details
-              type: sequence
-              items:
-                - text:
-                    en: "You can create an account, use an institutional one if you have one, or use your ORCID, Github or even Google account to log in."
-                  set: [ 'found.hairycat.mathmoddb' ]
+          - text:
+              en: "Where do you want to go?"
+            responses:
+              - text:
+                  en: "MathModDB"
+                thenText: "MathModDB is a database of mathematical models. It helps organize and link mathematical models, offering structured insights into mathematical modelling and related computational tasks. "
+                then: mathmoddb
+              - text:
+                  en: "MathAlgoDB"
+                thenText: "MathAlgoDB Knowledge Graph for Scientific Computing connects mathematical algorithms, models, problems, and software in a structured knowledge graph."
+              - text:
+                  en: "MaRDMO"
+                thenText: "MaRDMO is a user-friendly interface which can be used to add mathematical models to MathModDB."
+                then: mathmoddb
+              - text:
+                  en: "GMCI"
+                thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
+          - id: mathmoddb  
+            type: sequence
+            items:  
+              - text:
+                  en: "Please tell your friend to use use MaRDI's service MathModDB, the knowledge graph for mathematical models, to share the Hairy Cat Model."
+                responses:
+                  - text:
+                      en: "Thank you. That's the information I was looking for."
+                    then: Details
+                  - text:
+                      en: "Thank you. But what is a Knowledge Graph?"
+                    then: KG
+          - id: KG
+            type: sequence
+            items:
+              - text:
+                  en: "A knowledge graph is a way of organizing information by connecting related things. It stores facts like mathematical models, publications, or disciplines, and shows how they are linked to each other."
+                then: Details
+          - id: Details
+            type: sequence
+            items:
+              - text:
+                  en: "You can create an account, use an institutional one if you have one, or use your ORCID, Github or even Google account to log in."
+                set: [ 'found.hairycat.mathmoddb' ]
           Librarian:
             - type: sequence
               items:
@@ -497,6 +742,9 @@ quests:
           Dog:
             - text:
                 en: "Please, you promised to help me. Ask around, where I can publish my mathematical model."
+          Barista:
+            - text:
+                en: "I don't know much about cats. But it reminds me of Kopi Luwak, the coffee made from beans that have been eaten and excreted by the Asian palm civet."
           MathPerson3:
             - type: sequence
               items:
@@ -522,6 +770,17 @@ ending:
           items:
             - text:
                 en: "You did not find out where to best share a mathematical model."
+        - cond: 'quest.coffee.done'
+          class: 'citizensEmpowered'
+          type: sequence
+          items:
+            - text:
+                en: 'You searched MathAlgoDB for coffee making algorithms.'
+        - cond: '^quest.coffee.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help the Barista to search for coffee making algorithms."
         - cond: 'quest.mathmoddb.done'
           class: 'citizensEmpowered'
           type: sequence
@@ -533,12 +792,12 @@ ending:
           items:
             - text:
                 en: "You did not help Momo to publish the Hairy Cat Model."
-        - cond: 'COUNT("op.quest") < 2'
+        - cond: 'COUNT("op.quest") < 3'
           type: sequence
           items:
             - text:
                 en: "Try again!"
-        - cond: 'COUNT("op.quest") = 2'
+        - cond: 'COUNT("op.quest") = 3'
           type: sequence
           items:
             - text:
