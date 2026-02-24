@@ -1,5 +1,5 @@
 decision:
-  en: "Talk to the conference participants and solve their quests."
+  en: "Talk to the characters and solve their quests."
 prompt:
   en: "You are at a conference about applied mathematics. You enter the scene after a conference slot, the audience leaves the room and discusses the presentations they have just heard. Some may have problems you can help them with."
   # - inc.mayor
@@ -160,6 +160,7 @@ npcs:
               en: "Beep! Whirrrrrr...Ssshhhhhhhh... drip, drip, drip."
           - text:
               en: "Here you go. Be careful, it is hot!"
+            set: [ 'pnt.coffeesmall.coffee' , 'op.quest.coffeemachine' ]
   webBrowser:
     type: invisible
     name:
@@ -190,7 +191,7 @@ quests:
         - type: sequence
           items:
             - text:
-                en: "I have been wondering how to improve the coffee experience for the conference participants. I want to reduce the preperation time, and if possible further improve the taste."
+                en: "I have been wondering how to improve the coffee experience for the conference participants. I want to reduce the preparation time, and if possible further improve the taste."
             - text:
                 en: "I want to update my machine, but would need to know what algorithms are available. Can you help me with that?"
               responses:
@@ -205,20 +206,97 @@ quests:
                     en: "Oh, that's too bad. But sure, take a cookie. Maybe next time!"
     stages:
       - cond: 'found.mathalgodb.1'
-        target: Barista
         prompt:
           en: "Tell the Barista about your findings."
         dialogues:
+          dog:
+            - text:
+                en: "Woof! Woof!"
+          webBrowser:
+            - type: random
+              items:
+                - text:
+                    en: "Another coffee making algorithm is called 'Single-shot, first-order thermo-hydraulic percolation scheme'."
+                - text:
+                    en: "Another coffee making algorithm is called '1-stage, 9-bar high-pressure extraction method with finely discretized Arabica input'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Crema-preserving, short-horizon concentrated brewing protocol'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Compact support, high-intensity caffeine projection method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Boussinesq Approximation Roast'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Newton–Raphson Bean Extraction'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Markovian Percolation Process'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Maximum Entropy Brew'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Stochastic Gradient Descent Roasting'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Bayesian Optimization Extraction'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Quantum Annealing Percolation'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Gaussian Process Infusion'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Hamiltonian Roast Dynamics'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Phase-Field Percolation Model'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Conjugate Gradient Extraction'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Runge–Kutta Brew'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Euler–Lagrange Infusion'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Two-phase dilution-corrected espresso extension method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Post-extraction hot-water augmentation algorithm (PEHWA)'."
+                - text:
+                    en: "Another coffee making algorithm is called '1-shot base solver with explicit thermal volume expansion'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Low-gradient intensity normalization scheme'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Sequential espresso–water coupling method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'First-order dilution-stabilized black coffee formulation'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Two-component espresso–milk coupling with microfoam stabilization'."
+                - text:
+                    en: "Another coffee making algorithm is called '3-stage thermal homogenization and lipid-emulsion integration method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Implicit crema–foam interface smoothing algorithm'."
+                - text:
+                    en: "Another coffee making algorithm is called 'High-volume dairy-dominant espresso blending scheme'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Second-order milk-texture regularized extraction protocol'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Latent-heat-driven microbubble dispersion method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Layer-preserving espresso injection into preconditioned milk domain'."
+                - text:
+                    en: "Another coffee making algorithm is called '3-layer stratified density-stable infusion algorithm'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Explicit top-down crema deposition scheme'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Multi-phase buoyancy-controlled shot insertion method'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Vertical gradient dairy–espresso stratification solver'."
+                - text:
+                    en: "Another coffee making algorithm is called 'Sequential density-ordered composition algorithm'."
+                - text:
+                    en: "Another coffee making algorithm is called 'CoffeeBrew.jl — A Modular Framework for Pressure-Constrained Beverage Solvers'."
           Barista:
             - type: sequence
               items:
               - text: 
                   en: "Thank you so much for finding out about different coffee making algorithms!"
               - text:
-                  en: "I will need to do some benchmark tests to evaluate which one offers an optimum of taste, energy consumption and preperation time."
+                  en: "I will need to do some benchmark tests to evaluate which one offers an optimum of taste, energy consumption and preparation time."
               - text:
                   en: "Then I will update my machine right away. I am sure the conference participants will love it!"
-                set: [ 'quest.coffee.done', 'pnt.love.coffee' , 'op.quest.coffee' ]
+                set: [ 'quest.coffee.done', 'pnt.coffee.coffee' , 'op.quest.coffee' ]
       - cond: '^found.mathalgodb.1'
         prompt:
           en: "Find information about different coffee making algorithms."
@@ -275,19 +353,25 @@ quests:
                 - text: 
                     en: "Thank you for choosing MathAlgoDB, the Algorithm Knowledge Graph."
                 - text:
-                    en: "Here you can find information about different algorithms, their relations to mathematical models, problems, software, benchmarks, and publications."
-                  then: whattodo
-            - id: whattodo
-              type: sequence
-              items:
-                - text:  
-                    en: "What would you like to do next?"
+                    en: "Here you can find information about different algorithms, their relations to mathematical models, problems, software, benchmarks, and publications. What would you like to do next?"
                   responses:
                     - text:
                         en: "I want to search for coffee making algorithms."
                       then: search1
                     - text:
                         en: "I need and explanation of one of the terms you mentioned."
+                      then: explain
+            - id: whattodo
+              type: sequence
+              items:
+                - text:
+                    en: "What would you like to do next?"
+                  responses:
+                    - text:
+                        en: "I want to search for coffee making algorithms."
+                      then: search1
+                    - text:
+                        en: "I need and explanation of one of the terms you mentioned earlier."
                       then: explain
             - id: search1
               type: sequence
@@ -336,9 +420,13 @@ quests:
               type: sequence
               items:
                 - text:
-                    en: "Ok, your query should look like this: 'Which <Algorithm ∨> <solves ∨> <coffee making ∨> ?'. Results are shown automatically."
+                    en: "Ok, your query should look like this: 'Which <Algorithm ∨> <solves ∨> <coffee making ∨> ?'. Results are shown automatically. You found several algorithms for coffee making!"
                 - text:
-                    en: "You found several algorithms for coffee making! You can click on each of them to get more information, like which publication analyzes the algorithm, or which software implements it."
+                    en: "One of the algorithms you found through the MathAlgoDB query is called 'Deterministic 25-second finite-volume espresso solver'."
+                - text: 
+                    en: "This algorithm is described in the publication 'The Ultimate Guide to Coffee Making Algorithms' by John Doe and Jane Doe, published in the Journal of Coffee Science in 2023."
+                - text:
+                    en: "Take the list of all coffee making algorithms you found to the Barista, so she can choose which one to implement in her machine. If you come back to me before that, I will give you one random algorithm from the list each time."
                   set: [ 'found.mathalgodb.1' ]
             - id: explain
               type: sequence
@@ -406,7 +494,7 @@ quests:
                   en: "Thank you so much for adding my Hairy Cat Model to the database! "
               - text:
                   en: "I am so happy that other researchers can now find it and use it for their research. You are the best!"
-                set: [ 'quest.mathmoddb.done', 'pnt.love.mathmoddb' , 'op.quest.mathmoddb' ]
+                set: [ 'quest.mathmoddb.done', 'pnt.cat.mathmoddb' , 'op.quest.mathmoddb' ]
           Barista:
             - text:
                 en: "Oh, you are looking for Momo? She sits right there. Don't be afraid to talk to her, she is a very nice dog!"
@@ -632,7 +720,7 @@ quests:
                 - text: 
                     en: "Share it on MathModDB."
                   thenText: "Great! I will add it to MathModDB, the database of mathematical models. Thank you so much for your help!"
-                  set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+                  set: [ 'quest.hairycat.done', 'pnt.cat.hairycat' , 'op.quest.hairycat' ]
                 - text:
                     en: "Share it on the GMCI community."
                   thenText: "I heard about the community for Graphical Modelling and Causal Inference. It is MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else. Please ask around for me."
@@ -660,7 +748,7 @@ quests:
                     - text: 
                         en: "Share it on MathModDB."
                       thenText: "Great! I will add it to MathModDB, the database of mathematical models. Thank you so much for your help!"
-                      set: [ 'quest.hairycat.done', 'pnt.love.hairycat' , 'op.quest.hairycat' ]
+                      set: [ 'quest.hairycat.done', 'pnt.cat.hairycat' , 'op.quest.hairycat' ]
                     - text:
                         en: "Share it on the GMCI community."
                       thenText: "I heard about the community for Graphical Modelling and Causal Inference. It is MaRDI service for topical datasets, dataset collections, and metadata. I believe, I need something else."
@@ -770,17 +858,6 @@ ending:
           items:
             - text:
                 en: "You did not find out where to best share a mathematical model."
-        - cond: 'quest.coffee.done'
-          class: 'citizensEmpowered'
-          type: sequence
-          items:
-            - text:
-                en: 'You searched MathAlgoDB for coffee making algorithms.'
-        - cond: '^quest.coffee.done'
-          type: sequence
-          items:
-            - text:
-                en: "You did not help the Barista to search for coffee making algorithms."
         - cond: 'quest.mathmoddb.done'
           class: 'citizensEmpowered'
           type: sequence
@@ -792,12 +869,34 @@ ending:
           items:
             - text:
                 en: "You did not help Momo to publish the Hairy Cat Model."
-        - cond: 'COUNT("op.quest") < 3'
+        - cond: 'quest.coffee.done'
+          class: 'citizensEmpowered'
+          type: sequence
+          items:
+            - text:
+                en: 'You searched MathAlgoDB for coffee making algorithms.'
+        - cond: '^quest.coffee.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help the Barista to search for coffee making algorithms."
+        - cond: 'op.quest.coffeemachine'
+          class: 'citizensEmpowered'
+          type: sequence
+          items:
+            - text:
+                en: 'You got some coffee from the coffee machine.'
+        - cond: '^op.quest.coffeemachine'
+          type: sequence
+          items:
+            - text:
+                en: "You did not get any coffee from the coffee machine."      
+        - cond: 'COUNT("op.quest") < 4'
           type: sequence
           items:
             - text:
                 en: "Try again!"
-        - cond: 'COUNT("op.quest") = 3'
+        - cond: 'COUNT("op.quest") = 4'
           type: sequence
           items:
             - text:

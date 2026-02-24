@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.557 332.847">
+  <g id="b" data-name="line">
+    <!-- Cup body (scaled up) -->
+    <path d="
+      M40 110
+      H295
+      V215
+      C295 275, 245 310, 168 310
+      C90 310, 40 275, 40 215
+      Z
+      M295 140
+      C335 140, 335 215, 295 215
+    "
+    fill="#c69c6d"
+    stroke="#2e3192"
+    stroke-width="10"
+    stroke-miterlimit="10"/>
+    
+    <!-- Coffee surface (scaled up) -->
+    <ellipse cx="168" cy="110" rx="127" ry="35"
+      fill="#8b5a2b"
+      stroke="#2e3192"
+      stroke-width="10"/>
+  </g>
+</svg>

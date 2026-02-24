@@ -74,7 +74,7 @@ i18n:
     pressToContinue:
       en: 'Press space to continue'
     defaultPrompt:
-      en: 'Talk to the conference participants with a :speech_bubble: and solve their quests.'
+      en: 'Talk to the characters with a :speech_bubble: and solve their quests.'
     includedInDecision:
       en: 'Included in the decision'
     inclusionBarTitle:

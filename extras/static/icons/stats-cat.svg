@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.557 332.847">
+  <g id="b" data-name="line" stroke="#2e3192" stroke-width="10" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round">
+    
+    <!-- Enlarged Cat head + body -->
+    <path d="
+      M168 25
+      L120 85
+      L75 45
+      L55 125
+      C40 170, 50 230, 85 270
+      C110 300, 135 315, 150 320
+      L150 330
+      L186 330
+      L186 320
+      C201 315, 226 300, 251 270
+      C286 230, 296 170, 281 125
+      L261 45
+      L216 85
+      Z
+    "
+    fill="#ff55a6"/>
+    
+    <!-- Inner ears -->
+    <path d="M120 85 L145 120 L95 120 Z" fill="#ffc0de"/>
+    <path d="M216 85 L191 120 L241 120 Z" fill="#ffc0de"/>
+    
+    <!-- Eyes -->
+    <circle cx="140" cy="175" r="16" fill="#ffffff"/>
+    <circle cx="196" cy="175" r="16" fill="#ffffff"/>
+    <circle cx="140" cy="175" r="7" fill="#2e3192" stroke="none"/>
+    <circle cx="196" cy="175" r="7" fill="#2e3192" stroke="none"/>
+    
+    <!-- Nose -->
+    <polygon points="168,205 150,225 186,225" fill="#2e3192" stroke="none"/>
+    
+    <!-- Mouth -->
+    <path d="M168 225 C155 245, 140 245, 130 230" fill="none"/>
+    <path d="M168 225 C181 245, 196 245, 206 230" fill="none"/>
+    
+    <!-- Whiskers -->
+    <path d="M110 210 H50" fill="none"/>
+    <path d="M110 230 H45" fill="none"/>
+    <path d="M226 210 H286" fill="none"/>
+    <path d="M226 230 H291" fill="none"/>
+    
+  </g>
+</svg>
