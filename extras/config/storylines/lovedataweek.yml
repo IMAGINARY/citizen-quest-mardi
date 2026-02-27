@@ -25,40 +25,68 @@ npcs:
             en: "I am a mathematician specialising in differential geometry and its applications in mathematical physics. I am also interested in stochastic algorithms and nonparametric statistics."
   robot:
     name:
-      en: "Robot (my default dialogue is chosen randomly)"
+      en: "Robot"
     spawn: { x: 1079, y: 500 }
     dialogue:
       - type: random
         items:
           - text:
-              en: "“Mathematics is the queen and servant of sciences”, according to a quote by Carl F. Gauss."
-          - text:
-              en: "Is Mathematics even a science?"
-          - text:
-              en: "Research data are not only empirical records."
-          - text:
-              en: "In modern mathematical research, we can find many types of data."
-          - text:
-              en: "One key difference between mathematics and other sciences is the existence of proofs."
-          - text:
               en: "Have you subscribed to the MaRDI newsletter, yet?"
-          - text:
-              en: "Mathematics is not especially well placed in terms of managing research data and software in comparison to other fields."
-          - text:
-              en: "Data must be accompanied by rich metadata that describes it."
-          - text:
-              en: "Storing and archiving research data is not a trivial matter and should be planned carefully."
           - text:
               en: "Information is data tagged with meaning."
           - text:
-              en: "Reusing knowledge is ingrained in the practice of scientific research as the basis of verifiability."
+              en: "Pure mathematics dreams in infinity. Applied mathematics wakes up and files a bug report."
           - text:
-              en: "Access to research information is the most fundamental principle for spreading science across the scientific community and society."
+              en: "In theory, the model is elegant. In practice, it meets data."
           - text:
-              en: "I :love: math!"
+              en: "Applied mathematics: where epsilon is small, but consequences are not."
           - text:
-              en: "Your math is data!"
-  Tabea:
+              en: "All models are wrong, but some get funded."
+          - text:
+              en: "Good applied mathematicians don’t just solve equations. They negotiate with reality."
+          - text:
+              en: "If it works on the first try, you probably hard-coded the answer."
+          - text:
+              en: "Applied math is the art of approximating the universe without upsetting it."
+          - text:
+              en: "We don’t predict the future. We bound it."
+          - text:
+              en: "Data that can’t be found might as well be fiction."
+          - text:
+              en: "Accessible beats impressive."
+          - text:
+              en: "Interoperable data is the lingua franca of algorithms."
+          - text:
+              en: "Reusable data is the gift that keeps on computing."
+          - text:
+              en: "Garbage in, garbage out, but undocumented in, non-reproducible forever."
+          - text:
+              en: "I told my model it was overfitting. It said, 'No, I’m just deeply committed.'"
+          - text:
+              en: "Applied math is like cooking. Pure math proves the recipe exists. Applied math tries to make it edible."
+          - text:
+              en: "Applied mathematicians don’t fear chaos. They discretize it."
+          - text:
+              en: "'It’s well-documented,' they said. The documentation: Final_version_REAL_v3_last.xlsx."
+          - text:
+              en: "Optimization is easy. Documentation is hard."
+          - text:
+              en: "In God we trust. All others must provide version control."
+          - text:
+              en: "Applied math is the study of ε so small it matters."
+          - text:
+              en: "No persistent identifier, no fixed point."
+          - text:
+              en: "Open data is a boundary condition for collaboration."
+          - text:
+              en: "In applied math, we linearize first and apologize later."
+          - text:
+              en: "Singular limits separate the brave from the tenured."
+          - text:
+              en: "A good scaling argument is worth a thousand simulations."
+          - text:
+              en: "Applied mathematics is where analysis negotiates with RAM."
+  Help:
     name:
       en: "Tabea"
     spawn: { x: 420, y: 538 }
@@ -96,7 +124,7 @@ npcs:
               en: "I brought some cookies. But you wanna know a secret?"
           - text:
               en: "The cake is a lie."
-  Christiane:
+  Help2:
     name:
       en: "Christiane"
     type: mayor
@@ -159,7 +187,7 @@ npcs:
           - text:
               en: "Beep! Whirrrrrr...Ssshhhhhhhh... drip, drip, drip."
           - text:
-              en: "Here you go. Be careful, it is hot!"
+              en: "Here you go. Be careful, it is hot! ☕"
             set: [ 'pnt.coffeesmall.coffee' , 'op.quest.coffeemachine' ]
   webBrowser:
     type: invisible
@@ -462,7 +490,7 @@ quests:
   mathmoddb:
     npc: Dog
     mood: exclamation
-    required: hairycat
+    required: [ hairycat, coffee ]
     available:
       dialogue:
         - type: sequence
@@ -843,6 +871,188 @@ quests:
           MathPerson2:
             - text: 
                 en: "We have experts here at the conference on research data management. You should ask at the MaRDI help desk, where best to share your model."
+  gmci:
+    npc: Help
+    mood: exclamation
+    # required: [ hairycat, coffee ]
+    available:
+      dialogue:
+        - type: sequence
+          items:
+            - text:
+                en: "We would like to have more datasets in our community for Graphical Modelling and Causal Inference. Some of the conference attendees might be able to contribute some datasets from their research."
+            - text:
+                en: "Could you help us and ask around if anyone has a dataset that they could share with the community?"
+              responses:
+                - text:
+                    en: "Sure, I'll help you."
+                  thenText:
+                    en: "Great, thank you! If you encounter any questions, come back anytime, and we will be happy to answer them."
+                  set: [ 'quest.gmci.active' ]
+                - text:
+                    en: "No, sorry. I wanted to get a coffee from the coffee machine ☕"
+                  thenText:
+                    en: "Sure, get a coffee. I can recommend the Weighted Linear Combination one. Come back anytime to help or chat."
+    stages:
+      - cond: 'COUNT("op.data") >= 3'
+        prompt:
+          en: "Go back to the MaRDI help desk."
+        target: Help
+        dialogues:
+          Help:
+            - type: sequence
+              items:
+               - text:
+                    en: "Thank you so much for helping to find new datasets to be added to the GMCI community!"
+               - text:
+                    en: "Once the new datasets are submitted, the MaRDI team will review them and add them to the GMCI platform."
+                 set: [ 'quest.gmci.done', 'pnt.empathy.gmci' , 'op.quest.gmci']
+      - prompt:
+          en: "Find people who have datasets to share."
+        counter:
+          expression: 'COUNT("op.data")'
+          max: 3
+          icon: person
+        dialogues:
+          MathPerson1:
+            - text:
+                en: "Sorry, I currently do not have any datasets to share. However, I am the editor for several well-known scientific journals. I can publish a call for such datasets in one of the upcoming issues."
+          Librarian:
+            - text:
+                en: "We don't offer any datasets in our library that are suitable for the GMCI community."
+          Dog:
+            - type: sequence
+              items:
+              - text:
+                  en: "I have collected quite some data on the behavior of cat fur. One thing I investigated was the cause–effect relationship of Diet and Fur Quality."
+              - text:
+                  en: "I am happy to share this dataset with the GMCI community. Please let me know, which format should I use?"
+                responses:
+                  - text:
+                      en: "I am not sure."
+                    thenText:
+                      en: "Please ask the MaRDI help desk, which format I should use. I will wait for you here."
+                  - text:
+                      en: "There is no specific format required."
+                    thenText:
+                      en: "Are you sure? Maybe you should ask at the MaRDI help desk, which format is best."
+                  - text:
+                      en: "tabular format: .csv, .txt, .tsv."
+                    thenText:
+                      en: "Thanks. I will share the dataset in tabular format with the GMCI community."
+                    set: [ 'op.data.dog' ]
+                  - text:
+                      en: "Each data point should be connected to a unique identifier by an arrow."
+                    thenText:
+                      en: "Are you sure? That sounds like Gibberish to me. Maybe you should ask at the MaRDI help desk, which format is best."
+          Barista:
+            - type: sequence
+              items:
+              - text:
+                  en: "I have collected quite some data benchmarking coffee brewing algorithms for performance (e.g., optimization accuracy or speed)."
+              - text:
+                  en: "All the data is in a big excel sheet. Do you really think it would be appropriate to share with the GMCI community?"
+                responses:
+                  - text:
+                      en: "I am not sure."
+                    thenText:
+                      en: "Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community. I will wait for you here."
+                  - text:
+                      en: "Your data is not suitable."
+                    thenText:
+                      en: "You are right. The data is more algorithm evaluation than causal inference."
+                  - text:
+                      en: "Your data is perfect for the GMCI community."
+                    thenText:
+                      en: "Well, actually, I don't think so. It is more algorithm evaluation than causal inference, so not suitable for the GMCI community."
+                  - text:
+                      en: "Yes, an excel sheet is fine."
+                    thenText:
+                      en: "I was more worried about the data itself. Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community."
+          MathPerson2:
+            - type: sequence
+              items:
+              - text:
+                  en: "I have a simulation dataset that includes variables such as fluid viscosity, thermal conductivity, density, Prandtl number, and measured heat transfer coefficient."
+              - text:
+                  en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance (possibly mediated through the Prandtl number)."
+              - text:
+                  en: "I am happy to share this dataset with the GMCI community."
+                set: [ 'op.data.math2' ]
+          webBrowser:
+            - text:
+                en: "Where do you want to go?"
+              responses:
+                - text:
+                    en: "MathModDB"
+                  thenText: "MathModDB is a database of mathematical models. It helps organize and link mathematical models, offering structured insights into mathematical modelling and related computational tasks. "
+                - text:
+                    en: "MathAlgoDB"
+                  thenText: "MathAlgoDB Knowledge Graph for Scientific Computing connects mathematical algorithms, models, problems, and software in a structured knowledge graph."
+                - text:
+                    en: "MaRDMO"
+                  thenText: "MaRDMO is a user-friendly interface which can be used to add mathematical models to MathModDB."
+                - text:
+                    en: "GMCI"
+                  thenText: "GMCI stands for the community Graphical Modelling and Causal Inference. On this platform, we curate and present topical datasets, dataset collections, and metadata."
+                  then: gmci
+            - id: gmci
+              type: sequence
+              items:
+                - text:
+                    en: "Each dataset entry is presented within a fixed structure with a description, intended task, and a detailed summary. References to the source are given, and new submissions should follow the layout."
+                - text:
+                    en: "The associated digital object identifier (DOI) allows for permanent references to the object. Submit, store, and publish your topical dataset or collection for public accessibility, visibility, and longevity."
+          _mardiHelpdesk:
+            - type: sequence
+              items:
+                - text:
+                    en: "Welcome back! Do you need answers to some questions about sharing datasets with the GMCI community?"
+                  responses:
+                    - text:
+                        en: "In which format should a dataset be submitted?"
+                      thenText: 
+                        en: "All datasets should be in tabular format: .csv, .txt, .tsv. Additionally, if a ground truth exists for the dataset, it should be provided in a separate file."
+                    - text:
+                        en: "What is 'Graphical Modelling and Causal Inference'?"
+                      then: gmci
+                    - text:
+                        en: "How is ownership handled in the GMCI community?"
+                      thenText: "When uploading to the community no ownership rights are transferred as well as no licence transfer. The dataset will be attributed to you as the contributor, and you will retain ownership of your data."  
+                    - text:
+                        en: "No, I am all set, thank you!"
+                      thenText: 
+                        en: "Great! Come back anytime if you have more questions."
+            - id: gmci
+              type: sequence
+              items:
+                - text:
+                    en: "Graphical Modelling and Causal Inference is a framework for representing and analyzing relationships between variables using graphs (such as directed acyclic graphs)."
+                - text:
+                    en: "It allows researchers to distinguish correlation from causation and to answer questions like “What happens if we change X?” by modeling explicit cause–effect structures."
+                - text:
+                    en: "Suppose we draw a simple graph: Rain → Wet Ground. Graphical modelling represents this relationship with an arrow, and causal inference lets us ask: 'If we could make it rain, would the ground become wet?'"
+          MathPerson3:
+            - type: sequence
+              items:
+              - text:
+                  en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions."
+              - text:
+                  en: "I could contribute it to the GMCI community. However, how is ownership handled?"
+                responses:
+                  - text:
+                      en: "I am not sure."
+                    thenText:
+                      en: "Please ask the MaRDI help desk, how ownership is handled in the GMCI community. I will wait for you here."
+                  - text:
+                      en: "You will keep the ownership."
+                    thenText:
+                      en: "Great! I will share my dataset with the GMCI community. I think ownership is important for datasets, because it defines who can legally use, share, and control the data while ensuring accountability and proper credit."
+                    set: [ 'op.data.math3' ]
+                  - text:
+                      en: "Authorship and license are transfered to the community."
+                    thenText:
+                      en: "This does not sound right. Please ask at the MaRDI help desk how ownership is handled in the GMCI community. I will wait for you here."
 ending:
   dialogue:
     - type: sequence
@@ -852,7 +1062,7 @@ ending:
           type: sequence
           items:
             - text:
-                en: 'You know about sharing mathematical models.'
+                en: '☑ You know about sharing mathematical models.'
         - cond: '^quest.hairycat.done'
           type: sequence
           items:
@@ -863,7 +1073,7 @@ ending:
           type: sequence
           items:
             - text:
-                en: 'You helped Momo to add the Hairy Cat Model to MathModDB.'
+                en: '☑ You helped Momo to add the Hairy Cat Model to MathModDB.'
         - cond: '^quest.mathmoddb.done'
           type: sequence
           items:
@@ -874,30 +1084,85 @@ ending:
           type: sequence
           items:
             - text:
-                en: 'You searched MathAlgoDB for coffee making algorithms.'
+                en: '☑ You searched MathAlgoDB for coffee making algorithms.'
         - cond: '^quest.coffee.done'
           type: sequence
           items:
             - text:
                 en: "You did not help the Barista to search for coffee making algorithms."
-        - cond: 'op.quest.coffeemachine'
+        - cond: 'quest.gmci.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
-                en: 'You got some coffee from the coffee machine.'
+                en: '☑ You helped to add more datasets to the GMCI community.'
+        - cond: '^quest.gmci.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help to add more datasets to the community."
         - cond: '^op.quest.coffeemachine'
           type: sequence
           items:
             - text:
-                en: "You did not get any coffee from the coffee machine."      
-        - cond: 'COUNT("op.quest") < 4'
+                en: "Next time, get a coffee from the coffee machine ☕"      
+        - cond: 'COUNT("op.quest") < 5'
           type: sequence
           items:
             - text:
                 en: "Try again!"
-        - cond: 'COUNT("op.quest") = 4'
+        - cond: 'COUNT("op.quest") = 5'
           type: sequence
           items:
             - text:
                 en: "You solved all quests! Great job! You are a true MaRDI champion!"
+        - type: sequence
+          items:
+            - text:
+                en: "Here is a random quote from the robot for you:"
+        - type: random
+          items:
+          - text:
+              en: "Have you subscribed to the MaRDI newsletter, yet?"
+          - text:
+              en: "Information is data tagged with meaning."
+          - text:
+              en: "In theory, the model is elegant. In practice, it meets data."
+          - text:
+              en: "Applied mathematics: where epsilon is small, but consequences are not."
+          - text:
+              en: "All models are wrong, but some get funded."
+          - text:
+              en: "If it works on the first try, you probably hard-coded the answer."
+          - text:
+              en: "We don’t predict the future. We bound it."
+          - text:
+              en: "Data that can’t be found might as well be fiction."
+          - text:
+              en: "Accessible beats impressive."
+          - text:
+              en: "Interoperable data is the lingua franca of algorithms."
+          - text:
+              en: "Reusable data is the gift that keeps on computing."
+          - text:
+              en: "Garbage in, garbage out, but undocumented in, non-reproducible forever."
+          - text:
+              en: "Applied mathematicians don’t fear chaos. They discretize it."
+          - text:
+              en: "Optimization is easy. Documentation is hard."
+          - text:
+              en: "In God we trust. All others must provide version control."
+          - text:
+              en: "Applied math is the study of ε so small it matters."
+          - text:
+              en: "No persistent identifier, no fixed point."
+          - text:
+              en: "Open data is a boundary condition for collaboration."
+          - text:
+              en: "In applied math, we linearize first and apologize later."
+          - text:
+              en: "Singular limits separate the brave from the tenured."
+          - text:
+              en: "A good scaling argument is worth a thousand simulations."
+          - text:
+              en: "Applied mathematics is where analysis negotiates with RAM."
