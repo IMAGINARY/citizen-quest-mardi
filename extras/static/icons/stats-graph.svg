@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.557 332.847">
+
+  <!-- Background circle (approximately through node centers) -->
+  <circle cx="168.0" cy="166.75426480542941" r="63.50852961085883"
+          fill="#ffffff"
+          stroke="#2e3192"
+          stroke-width="10" />
+
+  <defs>
+    <marker id="arrow" markerWidth="18" markerHeight="18"
+            refX="0" refY="9"
+            orient="auto"
+            markerUnits="userSpaceOnUse">
+      <path d="M0,0 L18,9 L0,18 Z" fill="#2e3192"/>
+    </marker>
+  </defs>
+
+  <!-- Nodes -->
+  <g stroke="#2e3192" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="113.0" cy="135" r="35" fill="#ff55a6"/>
+    <circle cx="223.0" cy="135" r="35" fill="#6ec5ff"/>
+    <circle cx="168" cy="230.26279441628824" r="40" fill="#ffd166"/>
+  </g>
+
+  <!-- Arrows -->
+  <g stroke="#2e3192" stroke-width="6" stroke-linecap="round" fill="none">
+    <line x1="153.0" y1="135.0"
+          x2="165.0" y2="135.0"
+          marker-end="url(#arrow)" />
+    <line x1="133.0" y1="169.64101615137753"
+          x2="136.5" y2="175.7031939778686"
+          marker-end="url(#arrow)" />
+    <line x1="203.0" y1="169.64101615137753"
+          x2="199.5" y2="175.7031939778686"
+          marker-end="url(#arrow)" />
+  </g>
+
+</svg>

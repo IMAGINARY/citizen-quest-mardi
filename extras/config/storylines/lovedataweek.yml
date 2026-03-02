@@ -906,7 +906,7 @@ quests:
                     en: "Thank you so much for helping to find new datasets to be added to the GMCI community!"
                - text:
                     en: "Once the new datasets are submitted, the MaRDI team will review them and add them to the GMCI platform."
-                 set: [ 'quest.gmci.done', 'pnt.empathy.gmci' , 'op.quest.gmci']
+                 set: [ 'quest.gmci.done', 'pnt.graph.gmci' , 'op.quest.gmci']
       - prompt:
           en: "Find people who have datasets to share."
         counter:
@@ -948,27 +948,46 @@ quests:
           Barista:
             - type: sequence
               items:
-              - text:
-                  en: "I have collected quite some data benchmarking coffee brewing algorithms for performance (e.g., optimization accuracy or speed)."
-              - text:
-                  en: "All the data is in a big excel sheet. Do you really think it would be appropriate to share with the GMCI community?"
-                responses:
-                  - text:
-                      en: "I am not sure."
-                    thenText:
-                      en: "Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community. I will wait for you here."
-                  - text:
-                      en: "Your data is not suitable."
-                    thenText:
-                      en: "You are right. The data is more algorithm evaluation than causal inference."
-                  - text:
-                      en: "Your data is perfect for the GMCI community."
-                    thenText:
-                      en: "Well, actually, I don't think so. It is more algorithm evaluation than causal inference, so not suitable for the GMCI community."
-                  - text:
-                      en: "Yes, an excel sheet is fine."
-                    thenText:
-                      en: "I was more worried about the data itself. Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community."
+              - cond: 'op.nodata.barista'
+                type: sequence
+                items:
+                - text:
+                    en: "You already talked to me. We agreed my data is not suitable for the GMCI community."
+                - text:
+                    en: "I have now uploaded it to Zenodo, the free, open-access repository, so it is publicly available and can be linked, for example with the corresponding algorithms nodes in the MathAlgoDB knowledge graph."
+              - cond: '^op.nodata.barista'
+                type: sequence
+                items:
+                - text:
+                    en: "I have collected quite some data benchmarking coffee brewing algorithms for performance (e.g., optimization accuracy or speed)."
+                - text:
+                    en: "All the data is in a big excel sheet. Do you think it would be appropriate to share with the GMCI community?"
+                  responses:
+                    - text:
+                        en: "I am not sure."
+                      thenText:
+                        en: "Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community. I will wait for you here."
+                    - text:
+                        en: "Your data is not suitable."
+                      thenText:
+                        en: "You are right. The data is more algorithm evaluation than causal inference, and therefore not suitable for the GMCI community."
+                      then: nodata
+                    - text:
+                        en: "Your data is perfect for the GMCI community."
+                      thenText:
+                        en: "Well, actually, I don't think so. It is more algorithm evaluation than causal inference, so not suitable for the GMCI community."
+                      then: nodata
+                    - text:
+                        en: "Yes, an excel sheet is fine."
+                      thenText:
+                        en: "I was more worried about the data itself. Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community."
+            - cond: '^op.nodata.barista'
+              id: nodata
+              type: sequence
+              items:
+                - text:
+                    en: "However, I talked to some researchers during the coffe break already. They told me about some interesting datasets they have. You can ask them to share their datasets with the GMCI community."
+                  set: [ 'op.nodata.barista' ]
           MathPerson2:
             - type: sequence
               items:
@@ -977,8 +996,21 @@ quests:
               - text:
                   en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance (possibly mediated through the Prandtl number)."
               - text:
-                  en: "I am happy to share this dataset with the GMCI community."
-                set: [ 'op.data.math2' ]
+                  en: "I am considering sharing this dataset with the GMCI community. However, can you tell me, if data files can be versioned?"
+                responses:
+                  - text:
+                      en: "I am not sure."
+                    thenText:
+                      en: "Please ask the MaRDI help desk, if data files can be versioned in the GMCI community. I will wait for you here."
+                  - text:
+                      en: "No, data files cannot be versioned."
+                    thenText:
+                      en: "This doesn't sound right. MaRDI is using a modern approach, I am pretty sure that data files can be versioned in the GMCI community. Please ask the MaRDI help desk, I will wait for you here."
+                  - text:
+                      en: "Yes, data files can be versioned."
+                    thenText:
+                      en: "Great! I will share my dataset with the GMCI community. Versioning is important for datasets, because it allows to track changes, revert to previous versions if needed, and maintain a history of the dataset's evolution."
+                    set: [ 'op.data.math2' ]
           webBrowser:
             - text:
                 en: "Where do you want to go?"
@@ -1017,10 +1049,26 @@ quests:
                         en: "What is 'Graphical Modelling and Causal Inference'?"
                       then: gmci
                     - text:
-                        en: "How is ownership handled in the GMCI community?"
-                      thenText: "When uploading to the community no ownership rights are transferred as well as no licence transfer. The dataset will be attributed to you as the contributor, and you will retain ownership of your data."  
+                        en: "I have a different question."
+                      then: more 
                     - text:
                         en: "No, I am all set, thank you!"
+                      thenText: 
+                        en: "Great! Come back anytime if you have more questions."
+            - id: more
+              type: sequence
+              items:
+                - text:
+                    en: "Please ask your question, and I will do my best to answer it or find the right person to answer it for you."
+                  responses:
+                    - text:
+                        en: "How is ownership handled in the GMCI community?"
+                      thenText: "When uploading to the community no ownership rights are transferred as well as no licence transfer. The dataset will be attributed to you as the contributor, and you will retain ownership of your data."
+                    - text:
+                          en: "Can the data files be versioned?"
+                      thenText: "Yes, data files can be versioned. You can maintain a history of changes and ensure that users can access the most up-to-date version of your dataset while still preserving the original version for reference."
+                    - text:
+                        en: "I don't have any more questions, thank you!"
                       thenText: 
                         en: "Great! Come back anytime if you have more questions."
             - id: gmci
@@ -1032,6 +1080,8 @@ quests:
                     en: "It allows researchers to distinguish correlation from causation and to answer questions like “What happens if we change X?” by modeling explicit cause–effect structures."
                 - text:
                     en: "Suppose we draw a simple graph: Rain → Wet Ground. Graphical modelling represents this relationship with an arrow, and causal inference lets us ask: 'If we could make it rain, would the ground become wet?'"
+                - text:
+                    en: "It is not simply plotting data and observing that two variables move together without modeling whether one actually causes the other. Such data would not be suitable for the GMCI community."
           MathPerson3:
             - type: sequence
               items:
