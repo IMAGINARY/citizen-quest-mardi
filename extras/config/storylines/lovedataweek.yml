@@ -2,9 +2,6 @@ decision:
   en: "Talk to the characters and solve their quests."
 prompt:
   en: "You are at a conference about applied mathematics. You enter the scene after a conference slot, the audience leaves the room and discusses the presentations they have just heard. Some may have problems you can help them with."
-  # - inc.mayor
-  # - inc.citizenPunk
-  # - inc.lawyer
 scenery:
   mardiDesk:
     spawn: { x: 363, y: 553 }
@@ -12,7 +9,21 @@ scenery:
     spawn: { x: 1327, y: 551 }
   libraryDesk:
     spawn: { x: 1902, y: 547 }
+  exit:
+    spawn: { x: 10, y: 366 }    
 npcs:
+  Exit:
+    name:
+      en: "Exit"
+    type: invisible
+    spawn: { x: 10, y: 366 }
+    dialogue:
+    - type: sequence
+      items:
+        - text:
+            en: "If you are using a keyboard, press 'E' to leave the conference. You will arrive at the end screen of the game."
+        - text:
+            en: "If you are using a gamepad, you will need to wait until the timer ends. Go get yourself a coffee at the coffee machine or chat with the robot."
   MathPerson1:
     name:
       en: "Aurela I. Agricola"
@@ -88,9 +99,9 @@ npcs:
               en: "Applied mathematics is where analysis negotiates with RAM."
   Help:
     name:
-      en: "Tabea"
+      en: "MaRDI Helpdesk"
     spawn: { x: 420, y: 538 }
-    type: citizenBraid
+    type: citizenPunk
     actAs: 
       - '_mardiHelpdesk'
     dialogue:
@@ -124,16 +135,6 @@ npcs:
               en: "I brought some cookies. But you wanna know a secret?"
           - text:
               en: "The cake is a lie."
-  Help2:
-    name:
-      en: "Christiane"
-    type: mayor
-    spawn: { x: 350, y: 538 }
-    actAs: 
-      - '_mardiHelpdesk'
-    dialogue:
-      - text:
-          en: "Do you know, there is a real MaRDI help desk at the MaRDI website? Check it out after the game."
   Dog:
     name:
       en: "Momo"
@@ -237,6 +238,9 @@ quests:
         prompt:
           en: "Tell the Barista about your findings."
         dialogues:
+          Help:
+            - text:
+                en: "I work at the MaRDI help desk. I will help you with questions about data."
           dog:
             - text:
                 en: "Woof! Woof!"
@@ -347,7 +351,7 @@ quests:
           Librarian:
             - text:
                 en: "You may use the MaRDI Portal Station around the corner to search for an algorithm using MathAlgoDB, the knowledge graph for numerical algorithms."
-          _mardiHelpdesk:
+          Help:
             - type: sequence
               items:
                 - text:
@@ -525,7 +529,10 @@ quests:
                 set: [ 'quest.mathmoddb.done', 'pnt.cat.mathmoddb' , 'op.quest.mathmoddb' ]
           Barista:
             - text:
-                en: "Oh, you are looking for Momo? She sits right there. Don't be afraid to talk to her, she is a very nice dog!"
+                en: "Oh, you are looking for Momo? She sits near the blackboard."
+          Help:
+            - text:
+                en: "Oh, you are looking for Momo? She sits right there near the blackboard. Don't be afraid to talk to her, she is a very nice dog!"
       - cond: '^found.mathmoddb.1'
         prompt:
           en: "Add the Hairy Cat Model to the database."
@@ -700,7 +707,7 @@ quests:
           Librarian:
             - text:
                 en: "You may use the MaRDI Portal Station around the corner to add a mathematical model to MathModDB."
-          _mardiHelpdesk:
+          Help:
             - text:
                 en: "Great to hear you want to add a model to MathModDB! Just use the MaRDI Portal Station over there."
           Barista:
@@ -761,6 +768,9 @@ quests:
         prompt:
           en: "Tell the dog Momo about MathModDB."
         dialogues:
+          Help:
+            - text:
+                 en: "Oh, you are looking for Momo? She sits over there. Don't be afraid to talk to her, she is a very nice dog!"
           Barista:
             - text:
                 en: "I don't know much about cats. But it reminds me of Kopi Luwak, the coffee made from beans that have been eaten and excreted by the Asian palm civet."
@@ -838,7 +848,7 @@ quests:
                   en: ":clock: 3 minutes later…"
               - text:
                   en: "There are quite a few publications by MaRDI. They have a help desk here at the conference. It is probably best to go over and talk to them."
-          _mardiHelpdesk:
+          Help:
             - type: sequence
               items:
                 - text:
@@ -899,6 +909,12 @@ quests:
           en: "Go back to the MaRDI help desk."
         target: Help
         dialogues:
+          Barista:
+            - text:
+                en: "Oh, you are looking for the MaRDI help desk? It is over there. Take a cookie on your way, they are delicious!"
+          Dog:
+            - text:
+                en: "Wuff!"
           Help:
             - type: sequence
               items:
@@ -923,28 +939,36 @@ quests:
           Dog:
             - type: sequence
               items:
-              - text:
-                  en: "I have collected quite some data on the behavior of cat fur. One thing I investigated was the cause–effect relationship of Diet and Fur Quality."
-              - text:
-                  en: "I am happy to share this dataset with the GMCI community. Please let me know, which format should I use?"
-                responses:
-                  - text:
-                      en: "I am not sure."
-                    thenText:
-                      en: "Please ask the MaRDI help desk, which format I should use. I will wait for you here."
-                  - text:
-                      en: "There is no specific format required."
-                    thenText:
-                      en: "Are you sure? Maybe you should ask at the MaRDI help desk, which format is best."
-                  - text:
-                      en: "tabular format: .csv, .txt, .tsv."
-                    thenText:
-                      en: "Thanks. I will share the dataset in tabular format with the GMCI community."
-                    set: [ 'op.data.dog' ]
-                  - text:
-                      en: "Each data point should be connected to a unique identifier by an arrow."
-                    thenText:
-                      en: "Are you sure? That sounds like Gibberish to me. Maybe you should ask at the MaRDI help desk, which format is best."
+              - cond: 'op.data.dog'
+                type: sequence
+                items:
+                - text:
+                    en: "You already convinced me to share my dataset with the GMCI community."
+              - cond: '^op.data.dog'
+                type: sequence
+                items:
+                - text:
+                    en: "I have collected quite some data on the behavior of cat fur. One thing I investigated was the cause–effect relationship of Diet and Fur Quality."
+                - text:
+                    en: "I am happy to share this dataset with the GMCI community. Please let me know, which format should I use?"
+                  responses:
+                    - text:
+                        en: "I am not sure."
+                      thenText:
+                        en: "Please ask the MaRDI help desk, which format I should use. I will wait for you here."
+                    - text:
+                        en: "There is no specific format required."
+                      thenText:
+                        en: "Are you sure? Maybe you should ask at the MaRDI help desk, which format is best."
+                    - text:
+                        en: "tabular format: .csv, .txt, .tsv."
+                      thenText:
+                        en: "Thanks. I will share the dataset in tabular format with the GMCI community."
+                      set: [ 'op.data.dog' ]
+                    - text:
+                        en: "Each data point should be connected to a unique identifier by an arrow."
+                      thenText:
+                        en: "Are you sure? That sounds like Gibberish to me. Maybe you should ask at the MaRDI help desk, which format is best."
           Barista:
             - type: sequence
               items:
@@ -991,26 +1015,34 @@ quests:
           MathPerson2:
             - type: sequence
               items:
-              - text:
-                  en: "I have a simulation dataset that includes variables such as fluid viscosity, thermal conductivity, density, Prandtl number, and measured heat transfer coefficient."
-              - text:
-                  en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance (possibly mediated through the Prandtl number)."
-              - text:
-                  en: "I am considering sharing this dataset with the GMCI community. However, can you tell me, if data files can be versioned?"
-                responses:
-                  - text:
-                      en: "I am not sure."
-                    thenText:
-                      en: "Please ask the MaRDI help desk, if data files can be versioned in the GMCI community. I will wait for you here."
-                  - text:
-                      en: "No, data files cannot be versioned."
-                    thenText:
-                      en: "This doesn't sound right. MaRDI is using a modern approach, I am pretty sure that data files can be versioned in the GMCI community. Please ask the MaRDI help desk, I will wait for you here."
-                  - text:
-                      en: "Yes, data files can be versioned."
-                    thenText:
-                      en: "Great! I will share my dataset with the GMCI community. Versioning is important for datasets, because it allows to track changes, revert to previous versions if needed, and maintain a history of the dataset's evolution."
-                    set: [ 'op.data.math2' ]
+              - cond: 'op.data.math2'
+                type: sequence
+                items:
+                - text:
+                    en: "You already convinced me to share my dataset with the GMCI community."
+              - cond: '^op.data.math2'
+                type: sequence
+                items:
+                - text:
+                    en: "I have a simulation dataset that includes variables such as fluid viscosity, thermal conductivity, density, Prandtl number, and measured heat transfer coefficient."
+                - text:
+                    en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance (possibly mediated through the Prandtl number)."
+                - text:
+                    en: "I am considering sharing this dataset with the GMCI community. However, can you tell me, if data files can be versioned?"
+                  responses:
+                    - text:
+                        en: "I am not sure."
+                      thenText:
+                        en: "Please ask the MaRDI help desk, if data files can be versioned in the GMCI community. I will wait for you here."
+                    - text:
+                        en: "No, data files cannot be versioned."
+                      thenText:
+                        en: "This doesn't sound right. MaRDI is using a modern approach, I am pretty sure that data files can be versioned in the GMCI community. Please ask the MaRDI help desk, I will wait for you here."
+                    - text:
+                        en: "Yes, data files can be versioned."
+                      thenText:
+                        en: "Great! I will share my dataset with the GMCI community. Versioning is important for datasets, because it allows to track changes, revert to previous versions if needed, and maintain a history of the dataset's evolution."
+                      set: [ 'op.data.math2' ]
           webBrowser:
             - text:
                 en: "Where do you want to go?"
@@ -1035,7 +1067,7 @@ quests:
                     en: "Each dataset entry is presented within a fixed structure with a description, intended task, and a detailed summary. References to the source are given, and new submissions should follow the layout."
                 - text:
                     en: "The associated digital object identifier (DOI) allows for permanent references to the object. Submit, store, and publish your topical dataset or collection for public accessibility, visibility, and longevity."
-          _mardiHelpdesk:
+          Help:
             - type: sequence
               items:
                 - text:
@@ -1085,24 +1117,32 @@ quests:
           MathPerson3:
             - type: sequence
               items:
-              - text:
-                  en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions."
-              - text:
-                  en: "I could contribute it to the GMCI community. However, how is ownership handled?"
-                responses:
-                  - text:
-                      en: "I am not sure."
-                    thenText:
-                      en: "Please ask the MaRDI help desk, how ownership is handled in the GMCI community. I will wait for you here."
-                  - text:
-                      en: "You will keep the ownership."
-                    thenText:
-                      en: "Great! I will share my dataset with the GMCI community. I think ownership is important for datasets, because it defines who can legally use, share, and control the data while ensuring accountability and proper credit."
-                    set: [ 'op.data.math3' ]
-                  - text:
-                      en: "Authorship and license are transfered to the community."
-                    thenText:
-                      en: "This does not sound right. Please ask at the MaRDI help desk how ownership is handled in the GMCI community. I will wait for you here."
+              - cond: 'op.data.math3'
+                type: sequence
+                items:
+                - text:
+                    en: "You already convinced me to share my dataset with the GMCI community."
+              - cond: '^op.data.math3'
+                type: sequence
+                items:
+                - text:
+                    en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions."
+                - text:
+                    en: "I could contribute it to the GMCI community. However, how is ownership handled?"
+                  responses:
+                    - text:
+                        en: "I am not sure."
+                      thenText:
+                        en: "Please ask the MaRDI help desk, how ownership is handled in the GMCI community. I will wait for you here."
+                    - text:
+                        en: "You will keep the ownership."
+                      thenText:
+                        en: "Great! I will share my dataset with the GMCI community. I think ownership is important for datasets, because it defines who can legally use, share, and control the data while ensuring accountability and proper credit."
+                      set: [ 'op.data.math3' ]
+                    - text:
+                        en: "Authorship and license are transfered to the community."
+                      thenText:
+                        en: "This does not sound right. Please ask at the MaRDI help desk how ownership is handled in the GMCI community. I will wait for you here."
 ending:
   dialogue:
     - type: sequence
@@ -1113,39 +1153,39 @@ ending:
           items:
             - text:
                 en: '☑ You know about sharing mathematical models.'
-        - cond: '^quest.hairycat.done'
-          type: sequence
-          items:
-            - text:
-                en: "You did not find out where to best share a mathematical model."
         - cond: 'quest.mathmoddb.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
                 en: '☑ You helped Momo to add the Hairy Cat Model to MathModDB.'
-        - cond: '^quest.mathmoddb.done'
-          type: sequence
-          items:
-            - text:
-                en: "You did not help Momo to publish the Hairy Cat Model."
         - cond: 'quest.coffee.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
                 en: '☑ You searched MathAlgoDB for coffee making algorithms.'
-        - cond: '^quest.coffee.done'
-          type: sequence
-          items:
-            - text:
-                en: "You did not help the Barista to search for coffee making algorithms."
         - cond: 'quest.gmci.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
                 en: '☑ You helped to add more datasets to the GMCI community.'
+        - cond: '^quest.hairycat.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not find out where to best share a mathematical model."
+        - cond: '^quest.mathmoddb.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help Momo to publish the Hairy Cat Model."
+        - cond: '^quest.coffee.done'
+          type: sequence
+          items:
+            - text:
+                en: "You did not help the Barista to search for coffee making algorithms."
         - cond: '^quest.gmci.done'
           type: sequence
           items:

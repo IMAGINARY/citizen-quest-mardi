@@ -1,7 +1,7 @@
 game:
   devModeShortcuts: false
   languages: ['en']
-  duration: 600 
+  duration: 600
   cameraPresets:
     walking:
       offset:
@@ -53,6 +53,8 @@ textures:
           srcs: 'coffee-table.png'
         - name: 'libraryDesk'
           srcs: 'library-desk.png'
+        - name: 'exit'
+          srcs: 'exit.png'
 players:
   1:
     color: '#27a6a8'
@@ -74,7 +76,7 @@ i18n:
     pressToContinue:
       en: 'Press space to continue'
     defaultPrompt:
-      en: 'Talk to the characters with a :speech_bubble: and solve their quests.'
+      en: 'Talk to the characters with a :speech_bubble: and solve their quests, or get a coffee.'
     includedInDecision:
       en: 'Included in the decision'
     inclusionBarTitle:
