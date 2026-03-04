@@ -944,22 +944,34 @@ quests:
                 items:
                 - text:
                     en: "You already convinced me to share my dataset with the GMCI community."
-              - cond: '^op.data.dog'
+              - cond: '^op.data.dog & ^op.notsuredata.dog'
                 type: sequence
                 items:
                 - text:
                     en: "I have collected quite some data on the behavior of cat fur. One thing I investigated was the cause–effect relationship of Diet and Fur Quality."
                 - text:
-                    en: "I am happy to share this dataset with the GMCI community. Please let me know, which format should I use?"
+                    en: "I am happy to share this dataset with the GMCI community. I have just one question:"
+              - cond: '^op.data.dog & op.notsuredata.dog'
+                type: sequence
+                items:
+                - text:
+                    en: "Did you talk to the MaRDI help desk? I hope you found an answer to my question:"
+              - cond: '^op.data.dog'
+                type: sequence
+                items:
+                - text:
+                    en: "Which format should I use?"
                   responses:
                     - text:
                         en: "I am not sure."
                       thenText:
                         en: "Please ask the MaRDI help desk, which format I should use. I will wait for you here."
+                      set: [ 'op.notsuredata.dog' ]
                     - text:
                         en: "There is no specific format required."
                       thenText:
                         en: "Are you sure? Maybe you should ask at the MaRDI help desk, which format is best."
+                      set: [ 'op.notsuredata.dog' ]
                     - text:
                         en: "tabular format: .csv, .txt, .tsv."
                       thenText:
@@ -969,7 +981,8 @@ quests:
                         en: "Each data point should be connected to a unique identifier by an arrow."
                       thenText:
                         en: "Are you sure? That sounds like Gibberish to me. Maybe you should ask at the MaRDI help desk, which format is best."
-          Barista:
+                      set: [ 'op.notsuredata.dog' ]
+          Barista:  
             - type: sequence
               items:
               - cond: 'op.nodata.barista'
@@ -979,18 +992,27 @@ quests:
                     en: "You already talked to me. We agreed my data is not suitable for the GMCI community."
                 - text:
                     en: "I have now uploaded it to Zenodo, the free, open-access repository, so it is publicly available and can be linked, for example with the corresponding algorithms nodes in the MathAlgoDB knowledge graph."
-              - cond: '^op.nodata.barista'
+              - cond: '^op.nodata.barista & ^op.notsuredata.barista'
                 type: sequence
                 items:
                 - text:
-                    en: "I have collected quite some data benchmarking coffee brewing algorithms for performance (e.g., optimization accuracy or speed)."
+                    en: "I have collected quite some data benchmarking coffee brewing algorithms for performance (e.g., optimization accuracy or speed). All the data is in a big excel sheet."
+              - cond: '^op.nodata.barista & op.notsuredata.barista'
+                type: sequence
+                items:
                 - text:
-                    en: "All the data is in a big excel sheet. Do you think it would be appropriate to share with the GMCI community?"
+                    en: "Did you talk to the MaRDI help desk? I hope you found an answer to my question:"
+              - cond: '^op.nodata.barista'
+                type: sequence
+                items:            
+                - text:
+                    en: "Is my data appropriate to share with the GMCI community?"
                   responses:
                     - text:
                         en: "I am not sure."
                       thenText:
                         en: "Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community. I will wait for you here."
+                      set: [ 'op.notsuredata.barista' ]
                     - text:
                         en: "Your data is not suitable."
                       thenText:
@@ -1005,6 +1027,7 @@ quests:
                         en: "Yes, an excel sheet is fine."
                       thenText:
                         en: "I was more worried about the data itself. Please ask the MaRDI help desk, if this kind of data is appropriate for the GMCI community."
+                      set: [ 'op.notsuredata.barista' ]
             - cond: '^op.nodata.barista'
               id: nodata
               type: sequence
@@ -1020,24 +1043,34 @@ quests:
                 items:
                 - text:
                     en: "You already convinced me to share my dataset with the GMCI community."
-              - cond: '^op.data.math2'
+              - cond: '^op.data.math2 & ^op.notsuredata.math2'
                 type: sequence
                 items:
                 - text:
                     en: "I have a simulation dataset that includes variables such as fluid viscosity, thermal conductivity, density, Prandtl number, and measured heat transfer coefficient."
                 - text:
-                    en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance (possibly mediated through the Prandtl number)."
+                    en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance. I'm happy to share the dataset, just one question:"
+              - cond: '^op.data.math2 & op.notsuredata.math2'
+                type: sequence
+                items:      
                 - text:
-                    en: "I am considering sharing this dataset with the GMCI community. However, can you tell me, if data files can be versioned?"
+                    en: "Did you talk to the MaRDI help desk? I hope you found an answer to my question:"
+              - cond: '^op.data.math2'
+                type: sequence
+                items:      
+                - text:
+                    en: "Can you tell me, if data files shared with the GMCI community can be versioned?"
                   responses:
                     - text:
                         en: "I am not sure."
                       thenText:
                         en: "Please ask the MaRDI help desk, if data files can be versioned in the GMCI community. I will wait for you here."
+                      set: [ 'op.notsuredata.math2' ]
                     - text:
                         en: "No, data files cannot be versioned."
                       thenText:
                         en: "This doesn't sound right. MaRDI is using a modern approach, I am pretty sure that data files can be versioned in the GMCI community. Please ask the MaRDI help desk, I will wait for you here."
+                      set: [ 'op.notsuredata.math2' ]
                     - text:
                         en: "Yes, data files can be versioned."
                       thenText:
@@ -1122,18 +1155,27 @@ quests:
                 items:
                 - text:
                     en: "You already convinced me to share my dataset with the GMCI community."
+              - cond: '^op.data.math3 & ^op.notsuredata.math3'
+                type: sequence
+                items:
+                - text:
+                    en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions. I could contribute it, just one question:"
+              - cond: '^op.data.math3 & op.notsuredata.math3'
+                type: sequence
+                items:      
+                - text:
+                    en: "Did you talk to the MaRDI help desk? I hope you found an answer to my question:"
               - cond: '^op.data.math3'
                 type: sequence
                 items:
                 - text:
-                    en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions."
-                - text:
-                    en: "I could contribute it to the GMCI community. However, how is ownership handled?"
+                    en: "How is ownership handled at the GMCI community?"
                   responses:
                     - text:
                         en: "I am not sure."
                       thenText:
                         en: "Please ask the MaRDI help desk, how ownership is handled in the GMCI community. I will wait for you here."
+                      set: [ 'op.notsuredata.math3' ]
                     - text:
                         en: "You will keep the ownership."
                       thenText:
@@ -1143,6 +1185,7 @@ quests:
                         en: "Authorship and license are transfered to the community."
                       thenText:
                         en: "This does not sound right. Please ask at the MaRDI help desk how ownership is handled in the GMCI community. I will wait for you here."
+                      set: [ 'op.notsuredata.math3' ]
 ending:
   dialogue:
     - type: sequence
@@ -1152,25 +1195,25 @@ ending:
           type: sequence
           items:
             - text:
-                en: '☑ You know about sharing mathematical models.'
+                en: "☑ You know about sharing mathematical models."
         - cond: 'quest.mathmoddb.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
-                en: '☑ You helped Momo to add the Hairy Cat Model to MathModDB.'
+                en: "☑ You helped Momo to add the Hairy Cat Model to MathModDB."
         - cond: 'quest.coffee.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
-                en: '☑ You searched MathAlgoDB for coffee making algorithms.'
+                en: "☑ You searched MathAlgoDB for coffee making algorithms."
         - cond: 'quest.gmci.done'
           class: 'citizensEmpowered'
           type: sequence
           items:
             - text:
-                en: '☑ You helped to add more datasets to the GMCI community.'
+                en: "☑ You helped to add more datasets to the GMCI community."
         - cond: '^quest.hairycat.done'
           type: sequence
           items:
