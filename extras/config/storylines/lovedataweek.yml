@@ -26,14 +26,14 @@ npcs:
             en: "If you are using a gamepad, you will need to wait until the timer ends. Go get yourself a coffee at the coffee machine or chat with the robot."
   MathPerson1:
     name:
-      en: "Aurela I. Agricola"
+      en: "Aurela I. Moufang"
     type: citizenBlue
     spawn: { x: 819, y: 448 }
     dialogue:
     - type: sequence
       items:
         - text:
-            en: "I am a mathematician specialising in differential geometry and its applications in mathematical physics. I am also interested in stochastic algorithms and nonparametric statistics."
+            en: "I am an industrial mathematician and I also do research in projective geometry. You might have heard about Moufang loops, a special kind of algebraic structure, or the branch of geometry called Moufang planes."
   robot:
     name:
       en: "Robot"
@@ -469,7 +469,7 @@ quests:
                     - text:
                         en: "What is an algorithm?"
                       thenText:
-                        en: "An algorithm is a step-by-step procedure for performing a task. It can be implemented in software and executed on a computer. Just like the procedure of preparing a Caffè Latte  with a coffee machine."
+                        en: "An algorithm is a step-by-step procedure for performing a task. It can be implemented in software and executed on a computer. Just like the procedure of preparing a Caffè Latte with a coffee machine."
                       then: whattodo
                     - text:
                         en: "What is a mathematical model?"
@@ -479,12 +479,12 @@ quests:
                     - text:
                         en: "What is a problem?"
                       thenText:
-                        en: "Each algorithms solves a certain problem at hand. In the case of coffee making, the problem of a thirsty and tired mathematician could be solved by preparing an Americano with a coffee machine."
+                        en: "Each algorithm solves a certain problem at hand. In the case of coffee making, the problem of a thirsty and tired mathematician could be solved by preparing an Americano with a coffee machine."
                       then: whattodo
                     - text:
                         en: "What is a software?"
                       thenText:
-                        en: "Software is a collection of instructions that tell a computer what to do. In a coffee machine these are the programs that implement and execute the preparation of the different types of coffee."
+                        en: "Software is a collection of instructions that tell a computer what to do. In a coffee machine, these are the programs that implement and execute the preparation of the different types of coffee."
                       then: whattodo
                     - text:
                         en: "What is a benchmark?"
@@ -930,7 +930,7 @@ quests:
           max: 3
           icon: person
         dialogues:
-          MathPerson1:
+          MathPerson3:
             - text:
                 en: "Sorry, I currently do not have any datasets to share. However, I am the editor for several well-known scientific journals. I can publish a call for such datasets in one of the upcoming issues."
           Librarian:
@@ -1128,7 +1128,7 @@ quests:
                   responses:
                     - text:
                         en: "How is ownership handled in the GMCI community?"
-                      thenText: "When uploading to the community no ownership rights are transferred as well as no licence transfer. The dataset will be attributed to you as the contributor, and you will retain ownership of your data."
+                      thenText: "When uploading to the community, no ownership rights are transferred, nor is a licence transferred. The dataset will be attributed to you as the contributor, and you will retain ownership of your data."
                     - text:
                           en: "Can the data files be versioned?"
                       thenText: "Yes, data files can be versioned. You can maintain a history of changes and ensure that users can access the most up-to-date version of your dataset while still preserving the original version for reference."
@@ -1147,7 +1147,7 @@ quests:
                     en: "Suppose we draw a simple graph: Rain → Wet Ground. Graphical modelling represents this relationship with an arrow, and causal inference lets us ask: 'If we could make it rain, would the ground become wet?'"
                 - text:
                     en: "It is not simply plotting data and observing that two variables move together without modeling whether one actually causes the other. Such data would not be suitable for the GMCI community."
-          MathPerson3:
+          MathPerson1:
             - type: sequence
               items:
               - cond: 'op.data.math3'
@@ -1159,7 +1159,7 @@ quests:
                 type: sequence
                 items:
                 - text:
-                    en: "I have a dataset on the aerodynamic stability of different aircraft wing designs under turbulent conditions. I could contribute it, just one question:"
+                    en: "I’ve compiled a dataset of object interactions whose hidden structure follows the identities of Moufang loops. I could contribute it, just one question:"
               - cond: '^op.data.math3 & op.notsuredata.math3'
                 type: sequence
                 items:      
