@@ -1,6 +1,6 @@
-# Quantum Quest
+# Causal Coffee & Casual Cats
 
-A game about quantum computing, part of the [Quantum Arcade](https://quantum-arcade.org/) project.
+A game about research data in mathematics, part of the Mathematical Research Data Initiative ([MaRDI](https://www.mardi4nfdi.de/)) project.
 
 Based on the interactive exhibit [Citizen Quest](https://github.com/IMAGINARY/citizen-quest), 
 developed by [Imaginary](https://about.imaginary.org/).
@@ -21,11 +21,10 @@ server.
 
 ## Credits
 
-- **Story:** Skye Rothenstein, Bianca Violet, Alexa Lehmann, Elisabeth Schaber, Karla Schön, Oliver Schön, and Andreas Matt
-- **Images:** Ariel Kahtan
+- **Story:** Bianca Violet
+- **Images:** Eric Londaits, adapted by Thomas Endler and Bianca Violet
 - **Game engine:** Eric Londaits and Christian Stussak (see [Citizen Quest](https://github.com/IMAGINARY/citizen-quest)).
 
-This project was supported by the [Federal Ministry of Research, Technology and Space](https://www.bmftr.bund.de/EN/Home/home_node.html).
 
 ## License
 
@@ -33,4 +32,4 @@ Code licensed under the MIT License. See [LICENSE](LICENSE) for details.
 Images licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
 See [extras/static/README-datalove-quest.md](extras/static/README-datalove-quest.md) for details.
 
-Copyright 2025 Imaginary gGmbH.
+Copyright 2026 Imaginary gGmbH.
