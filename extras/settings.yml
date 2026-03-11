@@ -48,12 +48,11 @@ textures:
         - name: 'guide-arrow'
           srcs: 'guide-arrow.png'
         - name: 'mardiDesk'
-          srcs: 'mardi-desk.png'
+          srcs: 'mardi-desk-1.png'
         - name: 'coffeeTable'
           srcs: 'coffee-table.png'
         - name: 'libraryDesk'
           srcs: 'library-desk.png'
-
 players:
   1:
     color: '#27a6a8'
@@ -63,7 +62,7 @@ storylines:
 i18n:
   ui:
     title:
-      en: 'Mardi Quest'
+      en: 'CC & CC'
     pressStart:
       en: "Press space to start"
     decisionMade:
