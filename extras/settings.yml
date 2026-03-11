@@ -53,8 +53,7 @@ textures:
           srcs: 'coffee-table.png'
         - name: 'libraryDesk'
           srcs: 'library-desk.png'
-        - name: 'exit'
-          srcs: 'exit.png'
+
 players:
   1:
     color: '#27a6a8'
