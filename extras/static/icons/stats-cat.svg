@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.557 332.847">
-  <g id="b" data-name="line" stroke="#2e3192" stroke-width="10" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round">
-    
-    <!-- Enlarged Cat head + body -->
-    <path d="
-      M168 25
-      L120 85
-      L75 45
-      L55 125
-      C40 170, 50 230, 85 270
-      C110 300, 135 315, 150 320
-      L150 330
-      L186 330
-      L186 320
-      C201 315, 226 300, 251 270
-      C286 230, 296 170, 281 125
-      L261 45
-      L216 85
-      Z
-    "
-    fill="#ff55a6"/>
-    
-    <!-- Inner ears -->
-    <path d="M120 85 L145 120 L95 120 Z" fill="#ffc0de"/>
-    <path d="M216 85 L191 120 L241 120 Z" fill="#ffc0de"/>
-    
-    <!-- Eyes -->
-    <circle cx="140" cy="175" r="16" fill="#ffffff"/>
-    <circle cx="196" cy="175" r="16" fill="#ffffff"/>
-    <circle cx="140" cy="175" r="7" fill="#2e3192" stroke="none"/>
-    <circle cx="196" cy="175" r="7" fill="#2e3192" stroke="none"/>
-    
-    <!-- Nose -->
-    <polygon points="168,205 150,225 186,225" fill="#2e3192" stroke="none"/>
-    
-    <!-- Mouth -->
-    <path d="M168 225 C155 245, 140 245, 130 230" fill="none"/>
-    <path d="M168 225 C181 245, 196 245, 206 230" fill="none"/>
-    
-    <!-- Whiskers -->
-    <path d="M110 210 H50" fill="none"/>
-    <path d="M110 230 H45" fill="none"/>
-    <path d="M226 210 H286" fill="none"/>
-    <path d="M226 230 H291" fill="none"/>
-    
+<svg id="a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 336.6 332.8">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #ff55a6;
+      }
+
+      .st0, .st1, .st2, .st3 {
+        stroke: #2e3192;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 10px;
+      }
+
+      .st1 {
+        fill: #ffc0de;
+      }
+
+      .st4 {
+        fill: #2e3192;
+      }
+
+      .st2 {
+        fill: #fff;
+      }
+
+      .st3 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="b">
+    <path class="st0" d="M168,25l-48,60-45-40-20,80c-15,45-5,105,30,145,25,30,50,45,65,50v10h36v-10c15-5,40-20,65-50,35-40,45-100,30-145l-20-80-45,40-48-60Z"/>
+    <path class="st1" d="M120,85l25,35h-50l25-35Z"/>
+    <path class="st1" d="M216,85l-25,35h50l-25-35Z"/>
+    <circle class="st2" cx="140" cy="175" r="16"/>
+    <circle class="st2" cx="196" cy="175" r="16"/>
+    <circle class="st4" cx="140" cy="175" r="7"/>
+    <circle class="st4" cx="196" cy="175" r="7"/>
+    <polygon class="st4" points="168 205 150 225 186 225 168 205"/>
+    <path class="st3" d="M168,225c-13,20-28,20-38,5"/>
+    <path class="st3" d="M168,225c13,20,28,20,38,5"/>
+    <path class="st3" d="M110,210h-60"/>
+    <path class="st3" d="M110,230H45"/>
+    <path class="st3" d="M226,210h60"/>
+    <path class="st3" d="M226,230h65"/>
   </g>
 </svg>

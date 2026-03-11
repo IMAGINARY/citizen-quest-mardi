@@ -4,13 +4,11 @@ prompt:
   en: "You are at a conference about applied mathematics. You enter the scene after a conference slot, the audience leaves the room and discusses the presentations they have just heard. Some may have problems you can help them with."
 scenery:
   mardiDesk:
-    spawn: { x: 363, y: 553 }
+    spawn: { x: 444, y: 553 }
   coffeeTable:
     spawn: { x: 1327, y: 551 }
   libraryDesk:
-    spawn: { x: 1902, y: 547 }
-  exit:
-    spawn: { x: 10, y: 366 }    
+    spawn: { x: 1902, y: 547 } 
 npcs:
   Exit:
     name:
@@ -100,7 +98,7 @@ npcs:
   Help:
     name:
       en: "MaRDI Helpdesk"
-    spawn: { x: 420, y: 538 }
+    spawn: { x: 450, y: 538 }
     type: citizenPunk
     actAs: 
       - '_mardiHelpdesk'
@@ -147,7 +145,7 @@ npcs:
     name:
       en: "Richie Mises"
     type: journalist
-    spawn: { x: 471, y: 333 }
+    spawn: { x: 280, y: 333 }
     dialogue:
       - text:
           en: "I am a researcher in applied mathematics and mechanics. I am interested in learning about research data management and how it can be applied to my work."
@@ -189,7 +187,7 @@ npcs:
               en: "Beep! Whirrrrrr...Ssshhhhhhhh... drip, drip, drip."
           - text:
               en: "Here you go. Be careful, it is hot! ☕"
-            set: [ 'pnt.coffeesmall.coffee' , 'op.quest.coffeemachine' ]
+            set: [ 'pnt.coffee.coffee' , 'op.quest.coffeemachine' ]
   webBrowser:
     type: invisible
     name:
@@ -456,7 +454,7 @@ quests:
                 - text:
                     en: "One of the algorithms you found through the MathAlgoDB query is called 'Deterministic 25-second finite-volume espresso solver'."
                 - text: 
-                    en: "This algorithm is described in the publication 'The Ultimate Guide to Coffee Making Algorithms' by John Doe and Jane Doe, published in the Journal of Coffee Science in 2023."
+                    en: "This algorithm is described in the publication 'World Atlas of Finite-Volume Algorithms for Espresso Extraction.' by J.R. Hoffmann, published in the most recent issue of the Journal 'Coffee&Data Quarterly'."
                 - text:
                     en: "Take the list of all coffee making algorithms you found to the Barista, so she can choose which one to implement in her machine. If you come back to me before that, I will give you one random algorithm from the list each time."
                   set: [ 'found.mathalgodb.1' ]
