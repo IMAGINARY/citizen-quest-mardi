@@ -57,6 +57,12 @@ players:
   1:
     color: '#27a6a8'
     spawn: { x: 100, y: 700 }
+    gamepadMapping:
+      axes:
+        horizontal: 0
+        vertical: 1
+        invertHorizontal: true
+        invertVertical: true
 storylines:
   - lovedataweek
 i18n:
@@ -79,6 +85,5 @@ i18n:
       en: 'Included in the decision'
     inclusionBarTitle:
       en: 'Who decides?'
-
 
 
