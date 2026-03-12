@@ -64,7 +64,7 @@ players:
         invertHorizontal: true
         invertVertical: true
 storylines:
-  - lovedataweek
+  - coffeecats
 i18n:
   ui:
     title:
