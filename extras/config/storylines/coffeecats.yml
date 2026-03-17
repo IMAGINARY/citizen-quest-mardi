@@ -107,12 +107,12 @@ npcs:
           en: "I work at the MaRDI help desk. I will help you with questions about data."
   MathPerson2:
     name:
-      en: "Lou Prandtl"
+      en: "Ada Argyris"
     spawn: { x: 1212, y: 333 }
     type: citizenLila
     dialogue:
       - text:
-          en: "I am a specialist in fluid dynamics. I am here to learn about the latest developments in research data management."
+          en: "I am a specialist in computational mathematics. I am here to learn about the latest developments in research data management."
   Librarian:
     name:
       en: "Librarian"
@@ -342,7 +342,7 @@ quests:
                 en: "Oh, my colleages from MaRDI have developed a service called MathAlgoDB. It is a knowledge graph for algorithms. Just go to the computer and check it out."
           MathPerson2:
             - text:
-                en: "Coffee making is an intersting problem. When I was working on my research on fluid dynamics, I was modeling the flow around submarine propeller blades. I wonder if this would be relevant for your problem." 
+                en: "Coffee making is an interesting problem. FEM is just like brewing coffee: built step by step, element by element." 
           MathPerson3:
             - text:
                 en: "I love coffee! We should offer a prize for the best coffee making algorithm at the next GAMM conference!"
@@ -1045,9 +1045,9 @@ quests:
                 type: sequence
                 items:
                 - text:
-                    en: "I have a simulation dataset that includes variables such as fluid viscosity, thermal conductivity, density, Prandtl number, and measured heat transfer coefficient."
+                    en: "I have a finite-element structural dataset with explicit causal relationships among design parameters, loading conditions, and mechanical outcomes."
                 - text:
-                    en: "With such data, you can analyze whether changes in viscosity causally influence heat transfer performance. I'm happy to share the dataset, just one question:"
+                    en: "I'm happy to share the dataset, just one question:"
               - cond: '^op.data.math2 & op.notsuredata.math2'
                 type: sequence
                 items:      
