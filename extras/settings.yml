@@ -70,7 +70,7 @@ i18n:
     title:
       en: 'CC & CC'
     pressStart:
-      en: "Press space to start"
+      en: "Press Ⓐ or space to start"
     decisionMade:
       en: 'Thank you for playing! Here are your quest achievements:'
     waitingToBegin:
@@ -78,7 +78,7 @@ i18n:
     waitingToEnd:
       en: 'Waiting for the other players…'
     pressToContinue:
-      en: 'Press space to continue'
+      en: 'Press Ⓐ or space to continue'
     defaultPrompt:
       en: 'Talk to the characters with a :speech_bubble: and solve their quests, or get a coffee.'
     includedInDecision:
