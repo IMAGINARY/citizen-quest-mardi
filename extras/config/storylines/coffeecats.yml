@@ -989,7 +989,7 @@ quests:
                 - text:
                     en: "You already talked to me. We agreed my data is not suitable for the GMCI community."
                 - text:
-                    en: "I have now uploaded it to Zenodo, the free, open-access repository, so it is publicly available and can be linked, for example with the corresponding algorithms nodes in the MathAlgoDB knowledge graph."
+                    en: "Nevertheless, I noticed that my data can be linked to algorithms in the MathAlgoDB knowledge graph. This is why I uploaded the data to Zenodo, the free, open-access repository for other Coffee-enthusiasts to enjoy."
               - cond: '^op.nodata.barista & ^op.notsuredata.barista'
                 type: sequence
                 items:
@@ -1107,7 +1107,7 @@ quests:
                     - text:
                         en: "In which format should a dataset be submitted?"
                       thenText: 
-                        en: "All datasets should be in tabular format: .csv, .txt, .tsv. Additionally, if a ground truth exists for the dataset, it should be provided in a separate file."
+                        en: "All datasets should be in tabular format: .csv, .txt. Additionally, if a ground truth exists for the dataset, it should be provided in a separate file."
                     - text:
                         en: "What is 'Graphical Modelling and Causal Inference'?"
                       then: gmci
