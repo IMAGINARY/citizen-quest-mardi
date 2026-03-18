@@ -21,7 +21,9 @@ npcs:
         - text:
             en: "If you are using a keyboard, press 'E' to leave the conference. You will arrive at the end screen of the game."
         - text:
-            en: "If you are using a gamepad, you will need to wait until the timer ends. Go get yourself a coffee at the coffee machine or chat with the robot."
+            en: "If you are using a gamepad and a touch screen, you might be able to reload the game using a touch gesture."
+        - text:
+            en: "If none of this works, you will need to wait until the timer ends. Go get yourself a coffee at the coffee machine or chat with the robot."
   MathPerson1:
     name:
       en: "Aurela I. Moufang"
